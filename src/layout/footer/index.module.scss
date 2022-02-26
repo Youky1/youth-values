@@ -1,0 +1,7 @@
+#footer {
+  background-color: $bg-color;
+  height: 10vh;
+  @include flex();
+  font-size: 14px;
+  color: #777;
+}

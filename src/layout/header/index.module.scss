@@ -1,0 +1,28 @@
+#header {
+  width: 100%;
+  height: 10vh;
+  border-bottom: 1px solid $border-color;
+  position: relative;
+  background-color: $bg-color;
+  .menu {
+    position: absolute;
+    left: 40vw;
+    width: 60%;
+    height: 100%;
+    @include flex(space-around);
+    .menuItem {
+      @include flex();
+      &:hover {
+        color: $theme-color;
+        cursor: pointer;
+      }
+      i {
+        margin-right: 4px;
+      }
+    }
+    .isActive {
+      font-weight: bold;
+      color: $theme-color;
+    }
+  }
+}
