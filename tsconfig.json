@@ -12,9 +12,20 @@
     "noEmit": true,
     "pretty": true,
     "resolveJsonModule": true,
-    "target": "esnext"
+    "target": "esnext",
+    "paths": {
+      "~/*": ["./*"],
+      "@/*": ["./src/*"]
+    }
   },
-  "include": ["src/**/*.ts", "src/*.ts", "src/**.ts", "src/*.tsx"],
+  "include": [
+    "src/**/*.ts",
+    "src/*.ts",
+    "src/**.ts",
+    "src/*.tsx",
+    "src/**/*.tsx"
+  ],
+
   "allowSyntheticDefaultImports": true,
   "esModuleInterop": true
 }
