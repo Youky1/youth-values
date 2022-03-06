@@ -8,7 +8,6 @@ export default function Header() {
   const location = useLocation();
   useEffect(() => {
     setCurrentPath(location.pathname);
-    console.log('change', currentPath);
   }, [location]);
 
   const nav = useNavigate();

@@ -1,0 +1,20 @@
+.inputBox {
+  height: 40px;
+  width: 600px;
+  border-radius: 20px;
+  border: 1px solid $border-color;
+  padding: 0 20px;
+  font-size: 16px;
+  @include flex();
+  .input {
+    outline: none;
+    border: none;
+    flex: 1;
+  }
+  .inputIcon {
+    font-size: 24px;
+    padding-left: 10px;
+    color: $success-color;
+    cursor: pointer;
+  }
+}

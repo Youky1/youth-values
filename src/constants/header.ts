@@ -1,5 +1,5 @@
 import {HeaderMenu} from '~/@types/common';
-const headerMenus: Array<HeaderMenu> = [
+const HEADER_MENUS: Array<HeaderMenu> = [
   {
     text: 'TodoList',
     icon: 'icon-todolist',
@@ -31,4 +31,4 @@ const headerMenus: Array<HeaderMenu> = [
     path: '/about',
   },
 ];
-export default headerMenus;
+export default HEADER_MENUS;

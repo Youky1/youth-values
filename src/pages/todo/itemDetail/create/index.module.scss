@@ -1,0 +1,29 @@
+#create {
+  height: 100%;
+  width: 100%;
+  @include flex(center, center, column);
+  .info {
+    margin-top: 20px;
+    width: 600px;
+    .itemLine {
+      height: 60px;
+      width: 100%;
+      padding: 0 40px;
+      @include flex(flex-start, center);
+      div:first-child {
+        width: 140px;
+        font-size: 18px;
+      }
+      .option {
+        width: 100%;
+        @include flex(flex-start);
+        div:first-child {
+          height: 20px;
+          width: 20px;
+          border-radius: 10px;
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+}

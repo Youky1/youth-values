@@ -1,0 +1,20 @@
+// 全局样式变量定义
+$bg-color: #f2f6fc;
+$border-color: #dcdfe6;
+$theme-color: #409eff;
+
+$success-color: #67c23a;
+$warning-color: #e6a23c;
+$error-color: #f56c6c;
+
+// 全局样式和mixin
+* {
+  margin: 0;
+  padding: 0;
+}
+@mixin flex($x: center, $y: center, $d: row) {
+  display: flex;
+  justify-content: $x;
+  align-items: $y;
+  flex-direction: $d;
+}
