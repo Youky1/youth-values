@@ -6,7 +6,9 @@ $theme-color: #409eff;
 $success-color: #67c23a;
 $warning-color: #e6a23c;
 $error-color: #f56c6c;
+$gray: #c0c4cc;
 
+$main-height: 90vh;
 // 全局样式和mixin
 * {
   margin: 0;
@@ -17,4 +19,10 @@ $error-color: #f56c6c;
   justify-content: $x;
   align-items: $y;
   flex-direction: $d;
+}
+
+@mixin ellipsis() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

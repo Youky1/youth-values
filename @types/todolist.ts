@@ -6,5 +6,6 @@ export interface ITodoItem {
   group: string;
   description: string;
   id?: number;
+  done: boolean;
 }
 export type ITodoItems = Array<ITodoItem>;

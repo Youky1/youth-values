@@ -10,10 +10,7 @@ import Footer from '@/layout/footer';
 import 'antd/dist/antd.css';
 function App() {
   return (
-    <div
-      className="App"
-      style={{height: '100vh', display: 'flex', flexDirection: 'column'}}
-    >
+    <div className="App" style={{overflow: 'hidden'}}>
       <Provider store={store}>
         <Router>
           <Header />

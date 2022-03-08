@@ -9,4 +9,5 @@ export interface InputConfig {
   icon: string;
   tip?: string;
   placeholder?: string;
+  defaultContent?: string;
 }

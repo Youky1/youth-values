@@ -2,8 +2,14 @@ import React, {useState} from 'react';
 import s from './index.module.scss';
 import {InputConfig} from '~/@types/common';
 import {message} from 'antd';
-export default function ({callback, icon, tip, placeholder}: InputConfig) {
-  const [inputValue, setInputValue] = useState('');
+export default function ({
+  callback,
+  icon,
+  tip,
+  placeholder,
+  defaultContent,
+}: InputConfig) {
+  const [inputValue, setInputValue] = useState(defaultContent || '');
   const onInput: React.ChangeEventHandler<HTMLInputElement> = e => {
     setInputValue(e.target.value);
   };
