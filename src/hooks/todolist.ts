@@ -13,7 +13,7 @@ export const useInitTodoList = () => {
     getTodoList()
       .then(list => dispatch(setTodoItemListAction(list as ITodoItems)))
       .catch(e => console.log(e));
-  });
+  }, []);
   return useSelector((state: RootState) => state.todolist.todolist);
 };
 

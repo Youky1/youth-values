@@ -10,4 +10,5 @@ export interface InputConfig {
   tip?: string;
   placeholder?: string;
   defaultContent?: string;
+  clear?: boolean;
 }

@@ -1,8 +1,12 @@
 import React, {useState} from 'react';
-import {Outlet} from 'react-router';
 import s from './index.module.scss';
-import Create from './create';
+import Editor from '@/component/editor';
 import {Drawer} from 'antd';
+import {ITodoItem} from '~/@types/todolist';
+import {useDispatch} from 'react-redux';
+import {addTodoItemAction} from '@/store/todolist/actions';
+import {addTodoItem} from '@/api/todolist';
+import {message} from 'antd';
 
 export default function () {
   const [visible, setVisible] = useState(false);
@@ -12,9 +16,14 @@ export default function () {
   const onClose = () => {
     setVisible(false);
   };
+  const dispatch = useDispatch();
+  const handleAdd = async (obj: ITodoItem) => {
+    await addTodoItem(obj);
+    dispatch(addTodoItemAction(obj));
+    message.success('添加代办事项成功');
+  };
   return (
     <div id={s.detail}>
-      <Outlet />
       <div className={s.addIcon} onClick={showDrawer}>
         <i className="iconfont icon-icon-"></i>
       </div>
@@ -25,7 +34,7 @@ export default function () {
         visible={visible}
         width={640}
       >
-        <Create />
+        <Editor callback={handleAdd} clear />
       </Drawer>
     </div>
   );

@@ -18,25 +18,31 @@ const levels = [
 export default function ({
   callback,
   initObj,
+  clear,
 }: {
   callback: Function;
   initObj?: ITodoItem;
+  clear?: boolean;
 }) {
   // 创建代办事项所需的数据
   const nameInput = useRef('');
-  const [createDate] = useState(new Date());
+  const [name, setName] = useState('');
+  const [createDate, setCreateDate] = useState(new Date());
   const [ddl, setDdl] = useState(new Date());
-  const [level, setLevel] = useState('');
+  const [level, setLevel] = useState('无');
   const [group, setGroup] = useState('');
   const [description, setDescription] = useState('');
   useEffect(() => {
     if (initObj) {
+      setName(initObj.name);
+      nameInput.current = initObj.name;
+      setCreateDate(initObj.createDate);
       setDdl(initObj.ddl);
       setLevel(initObj.level);
       setGroup(initObj.group);
       setDescription(initObj.description);
     }
-  }, []);
+  }, [initObj?.id]);
 
   // 初始化任务分组
   const groupList = useInitGroups();
@@ -53,11 +59,14 @@ export default function ({
       done: false,
     });
     try {
+      console.log(obj);
       await callback(obj);
-      setDdl(new Date());
-      setLevel('');
-      setGroup('');
-      setDescription('');
+      if (clear) {
+        setDdl(new Date());
+        setLevel('');
+        setGroup('');
+        setDescription('');
+      }
     } catch (e) {
       message.error('Error：' + e);
     }
@@ -72,7 +81,8 @@ export default function ({
           handleAddItem();
         }}
         placeholder="回车或点击右侧按钮添加事项"
-        defaultContent={initObj?.name}
+        defaultContent={name}
+        clear={clear}
       />
       <Collapse className={s.info}>
         <Panel header="更多信息（可选）" key="1">
@@ -82,7 +92,7 @@ export default function ({
           </div>
           <div className={s.itemLine}>
             <div>重要程度:</div>
-            <Select onChange={value => setLevel(value)} defaultValue="无">
+            <Select onChange={value => setLevel(value)} value={level}>
               {levels.map(l => (
                 <Option
                   key={l.color}

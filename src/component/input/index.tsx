@@ -8,6 +8,7 @@ export default function ({
   tip,
   placeholder,
   defaultContent,
+  clear,
 }: InputConfig) {
   const [inputValue, setInputValue] = useState('');
   useEffect(() => {
@@ -21,7 +22,9 @@ export default function ({
   const emit = () => {
     if (inputValue.length > 0) {
       callback(inputValue);
-      setInputValue('');
+      if (clear) {
+        setInputValue('');
+      }
       if (tip) {
         message.success(tip);
       }
