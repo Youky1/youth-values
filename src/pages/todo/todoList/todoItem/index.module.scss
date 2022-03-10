@@ -10,6 +10,10 @@
   .itemStatus {
     width: 14px;
     height: 100%;
+    transition: all 0.5s;
+    &:hover {
+      width: 30px;
+    }
   }
   .itemBtn {
     font-size: 30px;

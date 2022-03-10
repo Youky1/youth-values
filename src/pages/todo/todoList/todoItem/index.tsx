@@ -1,8 +1,7 @@
 import React, {useCallback} from 'react';
 import s from './index.module.scss';
 import {ITodoItem} from '~/@types/todolist';
-import {useNavigate} from 'react-router';
-import moment from 'moment';
+import {formatTime} from '@/util/time';
 const levels = new Map([
   ['高', '#f56c6c'],
   ['中', '#e6a23c'],
@@ -12,16 +11,29 @@ const levels = new Map([
 export default function Login({
   item,
   callback,
+  deleteCallback,
 }: {
   item: ITodoItem;
   callback: any;
+  deleteCallback?: any;
 }) {
   const {level, name, done, ddl} = item;
+
+  const handleClick = () => {
+    callback(item);
+  };
+
+  const handleDelete = () => {
+    console.log('set id', item);
+    deleteCallback(item.id);
+  };
+
   return (
-    <div className={s.listItem} onClick={() => callback(item)}>
+    <div className={s.listItem}>
       <div
         className={s.itemStatus}
         style={{backgroundColor: levels.get(level || '无')}}
+        onClick={handleDelete}
       ></div>
       <i
         className={
@@ -31,8 +43,10 @@ export default function Login({
           color: done ? '#67c23a' : '#c0c4cc',
         }}
       ></i>
-      <span className={s.itemText}>{name}</span>
-      <span className={s.itemDate}>{moment(ddl).format('YY-MM-DD')}</span>
+      <span className={s.itemText} onClick={handleClick}>
+        {name}
+      </span>
+      <span className={s.itemDate}>{formatTime(ddl)}</span>
     </div>
   );
 }

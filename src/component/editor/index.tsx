@@ -3,6 +3,7 @@ import s from './index.module.scss';
 import Input from '@/component/input';
 import {Collapse, DatePicker, Select, Input as InputAntd, message} from 'antd';
 import {ITodoItem} from '~/@types/todolist';
+import {EditorConfig} from '~/@types/common';
 import {useInitGroups} from '@/hooks/todolist';
 
 const {Panel} = Collapse;
@@ -15,15 +16,7 @@ const levels = [
   {value: '无', color: '#909399'},
 ];
 
-export default function ({
-  callback,
-  initObj,
-  clear,
-}: {
-  callback: Function;
-  initObj?: ITodoItem;
-  clear?: boolean;
-}) {
+export default function ({callback, initObj, clear, showDetail}: EditorConfig) {
   // 创建代办事项所需的数据
   const nameInput = useRef('');
   const [name, setName] = useState('');
@@ -59,7 +52,6 @@ export default function ({
       done: false,
     });
     try {
-      console.log(obj);
       await callback(obj);
       if (clear) {
         setDdl(new Date());
@@ -84,7 +76,7 @@ export default function ({
         defaultContent={name}
         clear={clear}
       />
-      <Collapse className={s.info}>
+      <Collapse className={s.info} defaultActiveKey={showDetail ? '1' : ''}>
         <Panel header="更多信息（可选）" key="1">
           <div className={s.itemLine}>
             <div>截止日期:</div>

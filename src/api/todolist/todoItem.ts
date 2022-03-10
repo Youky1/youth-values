@@ -11,7 +11,6 @@ const setCurrentId = (num: number) => localforage.setItem('currentId', num);
 
 export const getTodoList = async () => {
   const list = (await localforage.getItem('todolist')) || [];
-  console.log(list);
   return Promise.resolve(list as ITodoItems);
 };
 
@@ -22,9 +21,11 @@ export const addTodoItem = async (item: ITodoItem) => {
   try {
     const currentId = await getCurrentId();
     const list = ((await getTodoList()) as Array<ITodoItem>) || [];
-    list.push({...item, id: currentId + 1});
+    const newItem = {...item, id: currentId + 1};
+    list.push(newItem);
     await setCurrentId(currentId + 1);
-    return setTodoList(list);
+    await setTodoList(list);
+    return Promise.resolve(newItem);
   } catch (e) {
     return Promise.reject(e);
   }
@@ -48,18 +49,15 @@ export const updateTodoItem = async (target: ITodoItem) => {
 export const deleteTodoItem = async (target: number) => {
   try {
     const list = await getTodoList();
-    let i = 0;
-    let flag = false;
-    for (; i < list.length; i++) {
+    console.log('删除时获取的list：', list);
+    for (let i = 0; i < list.length; i++) {
       if ((list[i].id = target)) {
-        flag = true;
-        break;
+        console.log('删除成功');
+        list.splice(i, 1);
+        return setTodoList(list);
       }
     }
-    if (flag) {
-      list.splice(i, 1);
-    }
-    return setTodoList(list);
+    return Promise.reject('没有找到该ID');
   } catch (e) {
     return Promise.reject(e);
   }

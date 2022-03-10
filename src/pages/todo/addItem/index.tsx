@@ -18,8 +18,8 @@ export default function () {
   };
   const dispatch = useDispatch();
   const handleAdd = async (obj: ITodoItem) => {
-    await addTodoItem(obj);
-    dispatch(addTodoItemAction(obj));
+    const newItem = await addTodoItem(obj);
+    dispatch(addTodoItemAction(newItem));
     message.success('添加代办事项成功');
   };
   return (

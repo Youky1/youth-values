@@ -1,4 +1,5 @@
 #list {
   width: 50%;
+  min-height: $main-height;
   @include flex(flex-start, center, column);
 }

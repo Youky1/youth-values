@@ -1,6 +1,11 @@
 import {DefaultTodoListState, Action} from '~/@types/store';
 import {cloneDeep} from 'lodash';
-import {SET_TODO_ITEM, ADD_TODO_ITEM, UPDATE_TODO_ITEM} from './constants';
+import {
+  SET_TODO_ITEM,
+  ADD_TODO_ITEM,
+  UPDATE_TODO_ITEM,
+  DELETE_TODO_ITEM,
+} from './constants';
 const defaultState: DefaultTodoListState = {
   todolist: [],
   isShowAdd: false,
@@ -21,6 +26,15 @@ export default function (state = defaultState, action: Action) {
       for (let i = 0; i < newState.todolist.length; i++) {
         if (newState.todolist[i].id === payload.id) {
           newState.todolist[i] = payload;
+          break;
+        }
+      }
+      return newState;
+    }
+    case DELETE_TODO_ITEM: {
+      for (let i = 0; i < newState.todolist.length; i++) {
+        if (newState.todolist[i].id === payload) {
+          newState.todolist.splice(i, 1);
           break;
         }
       }
