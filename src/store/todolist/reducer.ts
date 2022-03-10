@@ -6,10 +6,11 @@ import {
   UPDATE_TODO_ITEM,
   DELETE_TODO_ITEM,
   TOGGLE_TODO_ITEM,
+  SEARCH_TODO_ITEM,
 } from './constants';
+import {ITodoItems} from '~/@types/todolist';
 const defaultState: DefaultTodoListState = {
   todolist: [],
-  isShowAdd: false,
 };
 export default function (state = defaultState, action: Action) {
   const newState = cloneDeep(state);
@@ -48,6 +49,13 @@ export default function (state = defaultState, action: Action) {
           break;
         }
       }
+      return newState;
+    }
+    case SEARCH_TODO_ITEM: {
+      const {currentList} = payload;
+      newState.todolist = (currentList as ITodoItems).filter(item =>
+        item.name.includes(payload.name)
+      );
       return newState;
     }
     default:

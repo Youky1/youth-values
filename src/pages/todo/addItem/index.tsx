@@ -6,7 +6,7 @@ import {ITodoItem} from '~/@types/todolist';
 import {useDispatch} from 'react-redux';
 import {addTodoItemAction} from '@/store/todolist/actions';
 import {addTodoItem} from '@/api/todolist';
-import {message} from 'antd';
+import {successTip} from '@/util';
 
 export default function () {
   const [visible, setVisible] = useState(false);
@@ -20,7 +20,7 @@ export default function () {
   const handleAdd = async (obj: ITodoItem) => {
     const newItem = await addTodoItem(obj);
     dispatch(addTodoItemAction(newItem));
-    message.success('添加代办事项成功');
+    successTip('添加代办事项成功');
   };
   return (
     <div id={s.detail}>

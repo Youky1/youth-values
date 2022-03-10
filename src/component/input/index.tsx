@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import s from './index.module.scss';
 import {InputConfig} from '~/@types/common';
-import {message} from 'antd';
+import {failTip, successTip} from '@/util';
 export default function ({
   callback,
   icon,
@@ -9,6 +9,7 @@ export default function ({
   placeholder,
   defaultContent,
   clear,
+  allowEmpty,
 }: InputConfig) {
   const [inputValue, setInputValue] = useState('');
   useEffect(() => {
@@ -20,16 +21,16 @@ export default function ({
     setInputValue(e.target.value);
   };
   const emit = () => {
-    if (inputValue.length > 0) {
+    if (allowEmpty || inputValue.length > 0) {
       callback(inputValue);
       if (clear) {
         setInputValue('');
       }
       if (tip) {
-        message.success(tip);
+        successTip(tip);
       }
     } else {
-      message.warn('输入为空');
+      failTip('输入为空');
     }
   };
   const onKeyDOwn: React.KeyboardEventHandler<HTMLInputElement> = e => {

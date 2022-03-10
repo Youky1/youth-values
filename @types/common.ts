@@ -13,6 +13,7 @@ export interface InputConfig {
   placeholder?: string;
   defaultContent?: string;
   clear?: boolean;
+  allowEmpty?: boolean;
 }
 
 export interface EditorConfig {

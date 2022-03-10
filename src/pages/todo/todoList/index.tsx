@@ -3,20 +3,27 @@ import s from './index.module.scss';
 import TodoItem from './todoItem';
 import Input from '~/src/component/input';
 import {useInitTodoList} from '@/hooks/todolist';
-import {Drawer, message, Modal} from 'antd';
+import {Drawer, Modal} from 'antd';
 import Editor from '~/src/component/editor';
 import {ITodoItem} from '~/@types/todolist';
 import {updateTodoItem, deleteTodoItem} from '@/api/todolist';
 import {
   updateTodoItemAction,
   deleteTodoItemAction,
+  searchItemAction,
 } from '@/store/todolist/actions';
 import {useDispatch} from 'react-redux';
+import {successTip, failTip} from '@/util';
+
 export default function TodoList() {
+  const dispatch = useDispatch();
   // 初始化待办事项列表
   const todoList = useInitTodoList();
-  const searchValue = useRef('');
-  const handleInput = useCallback((v: string) => (searchValue.current = v), []);
+
+  // 搜索事项回调
+  const handleInput = useCallback((v: string) => {
+    dispatch(searchItemAction(v));
+  }, []);
 
   // 当前在编辑的事项
   const [currentItem, setCurrentItem] = useState<ITodoItem>();
@@ -30,14 +37,13 @@ export default function TodoList() {
   const onClose = () => {
     setVisible(false);
   };
-  const dispatch = useDispatch();
   const handleUpdate = async (obj: ITodoItem) => {
     try {
       await updateTodoItem(obj);
       dispatch(updateTodoItemAction(obj));
-      message.success('修改代办事项成功');
+      successTip('修改代办事项成功');
     } catch (e) {
-      message.error('修改代办事项出错：' + e);
+      failTip('修改代办事项出错：' + e);
     }
   };
 
@@ -59,15 +65,20 @@ export default function TodoList() {
       await deleteTodoItem(currentDeleteId.current);
       dispatch(deleteTodoItemAction(currentDeleteId.current));
       handleCancel();
-      message.success('删除成功');
+      successTip('删除成功');
     } catch (e) {
-      message.error(String(e));
+      failTip(String(e));
     }
   };
 
   return (
     <div id={s.list}>
-      <Input icon="icon-sousuo" callback={handleInput} tip="搜索成功" />
+      <Input
+        icon="icon-sousuo"
+        callback={handleInput}
+        tip="搜索成功"
+        allowEmpty
+      />
       {todoList.map(item => (
         <TodoItem
           item={item}

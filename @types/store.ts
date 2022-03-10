@@ -2,7 +2,6 @@
 import {ITodoItem} from './todolist';
 export interface DefaultTodoListState {
   todolist: Array<ITodoItem>;
-  isShowAdd: boolean;
 }
 export interface Action {
   type: string;

@@ -1,10 +1,11 @@
 import React, {useEffect, useRef, useState} from 'react';
 import s from './index.module.scss';
 import Input from '@/component/input';
-import {Collapse, DatePicker, Select, Input as InputAntd, message} from 'antd';
+import {Collapse, DatePicker, Select, Input as InputAntd} from 'antd';
 import {ITodoItem} from '~/@types/todolist';
 import {EditorConfig} from '~/@types/common';
 import {useInitGroups} from '@/hooks/todolist';
+import {failTip} from '@/util';
 
 const {Panel} = Collapse;
 const {Option} = Select;
@@ -60,7 +61,7 @@ export default function ({callback, initObj, clear, showDetail}: EditorConfig) {
         setDescription('');
       }
     } catch (e) {
-      message.error('Error：' + e);
+      failTip('Error：' + e);
     }
   };
 

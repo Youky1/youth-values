@@ -4,9 +4,10 @@ import {
   UPDATE_TODO_ITEM,
   DELETE_TODO_ITEM,
   TOGGLE_TODO_ITEM,
+  SEARCH_TODO_ITEM,
 } from './constants';
 import {ITodoItem, ITodoItems} from '~/@types/todolist';
-import {toggleTodoItem} from '@/api/todolist';
+import {toggleTodoItem, getTodoList} from '@/api/todolist';
 import type {Dispatch} from 'redux';
 export const addTodoItemAction = (payload: ITodoItem) => ({
   type: ADD_TODO_ITEM,
@@ -31,6 +32,19 @@ export const toggleTodoItemAction = (id: number) => {
     dispatch({
       type: TOGGLE_TODO_ITEM,
       payload: id,
+    });
+  };
+};
+
+export const searchItemAction = (name: string) => {
+  return async (dispatch: Dispatch) => {
+    const currentList = await getTodoList();
+    dispatch({
+      type: SEARCH_TODO_ITEM,
+      payload: {
+        name,
+        currentList,
+      },
     });
   };
 };
