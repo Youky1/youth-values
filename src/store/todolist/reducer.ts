@@ -5,6 +5,7 @@ import {
   ADD_TODO_ITEM,
   UPDATE_TODO_ITEM,
   DELETE_TODO_ITEM,
+  TOGGLE_TODO_ITEM,
 } from './constants';
 const defaultState: DefaultTodoListState = {
   todolist: [],
@@ -35,6 +36,15 @@ export default function (state = defaultState, action: Action) {
       for (let i = 0; i < newState.todolist.length; i++) {
         if (newState.todolist[i].id === payload) {
           newState.todolist.splice(i, 1);
+          break;
+        }
+      }
+      return newState;
+    }
+    case TOGGLE_TODO_ITEM: {
+      for (let i = 0; i < newState.todolist.length; i++) {
+        if (newState.todolist[i].id === payload) {
+          newState.todolist[i].done = !newState.todolist[i].done;
           break;
         }
       }

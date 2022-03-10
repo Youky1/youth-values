@@ -62,3 +62,17 @@ export const deleteTodoItem = async (target: number) => {
     return Promise.reject(e);
   }
 };
+
+export const toggleTodoItem = async (target: number) => {
+  try {
+    const itemList = await getTodoList();
+    for (const item of itemList) {
+      if (item.id === target) {
+        return updateTodoItem({...item, done: !item.done});
+      }
+    }
+    return Promise.reject(`没有找到ID: ${target}`);
+  } catch (e) {
+    return Promise.reject(e);
+  }
+};
