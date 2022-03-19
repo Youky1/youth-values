@@ -1,12 +1,17 @@
 import React, {useState} from 'react';
+import {useDispatch} from 'react-redux';
 import s from './index.module.scss';
 import Title from '@/component/title';
 import {Select, Switch} from 'antd';
 import {useInitGroups} from '@/hooks/todolist';
 import {Input} from 'antd';
 import {addGroup, removeGroup} from '@/api/todolist/group';
-import {setShowDoneAction} from '@/store/todolist/actions';
-import {useDispatch} from 'react-redux';
+import {
+  setShowDoneAction,
+  setShowLevelAction,
+  setShowDdlAction,
+  setShowGroupAction,
+} from '@/store/todolist/actions';
 
 const {Option} = Select;
 export default function () {
@@ -35,6 +40,22 @@ export default function () {
   const handleSwitchChange = (checked: boolean) => {
     dispatch(setShowDoneAction(checked));
   };
+
+  // 时间范围
+  const handleDdlChange = (ddl: string) => {
+    dispatch(setShowDdlAction(ddl));
+  };
+
+  // 紧急程度
+  const handleLevelChange = (level: string) => {
+    dispatch(setShowLevelAction(level));
+  };
+
+  // 分组
+  const handleGroupChange = (group: string) => {
+    dispatch(setShowGroupAction(group));
+  };
+
   return (
     <div>
       <Title>显示筛选</Title>
@@ -44,7 +65,11 @@ export default function () {
       </div>
       <div className="lineContainer">
         <p>时间范围</p>
-        <Select defaultValue={'全部'} style={{width: 150}}>
+        <Select
+          defaultValue={'全部'}
+          style={{width: 150}}
+          onChange={handleDdlChange}
+        >
           <Option value="全部">全部</Option>
           <Option value="已过期">已过期</Option>
           <Option value="本周">本周</Option>
@@ -53,7 +78,11 @@ export default function () {
       </div>
       <div className="lineContainer">
         <p>紧急程度</p>
-        <Select defaultValue={'无'} style={{width: 150}}>
+        <Select
+          defaultValue={'无'}
+          style={{width: 150}}
+          onChange={handleLevelChange}
+        >
           <Option value="高">高</Option>
           <Option value="中">中</Option>
           <Option value="低">低</Option>
@@ -62,7 +91,11 @@ export default function () {
       </div>
       <div className="lineContainer">
         <p>分组</p>
-        <Select defaultValue={'全部'} style={{width: 150}}>
+        <Select
+          defaultValue={'全部'}
+          style={{width: 150}}
+          onChange={handleGroupChange}
+        >
           <Option value="全部">全部</Option>
           {groups.map(item => (
             <Option value={item} key={item}>

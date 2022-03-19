@@ -72,7 +72,7 @@ export default function Login({
       >
         {name}
       </span>
-      <span className={s.itemDate}>{formatTime(ddl)}</span>
+      {ddl && <span className={s.itemDate}>{formatTime(ddl)}</span>}
       <Modal
         title="确认要删除该事项吗？"
         visible={showModal}

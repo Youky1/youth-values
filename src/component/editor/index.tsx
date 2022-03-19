@@ -22,7 +22,7 @@ export default function ({callback, initObj, clear, showDetail}: EditorConfig) {
   const nameInput = useRef('');
   const [name, setName] = useState('');
   const [createDate, setCreateDate] = useState(new Date());
-  const [ddl, setDdl] = useState(new Date());
+  const [ddl, setDdl] = useState<Date | null>(null);
   const [level, setLevel] = useState('无');
   const [group, setGroup] = useState('');
   const [description, setDescription] = useState('');
@@ -43,16 +43,21 @@ export default function ({callback, initObj, clear, showDetail}: EditorConfig) {
 
   // 提交代办事项的回调函数
   const handleAddItem = async () => {
-    const obj: ITodoItem = Object.assign({}, initObj, {
-      name: nameInput.current,
-      createDate,
-      ddl,
-      level,
-      group,
-      description,
-      done: false,
-    });
+    const obj: ITodoItem = Object.assign(
+      {},
+      initObj,
+      {
+        name: nameInput.current,
+        createDate,
+        level,
+        group,
+        description,
+        done: false,
+      },
+      ddl ? {ddl} : {}
+    );
     try {
+      console.log(obj);
       await callback(obj);
       if (clear) {
         setDdl(new Date());

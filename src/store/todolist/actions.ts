@@ -8,6 +8,9 @@ import {
   ADD_GROUP,
   DELETE_GROUP,
   SET_SHOW_DONE,
+  SET_SHOW_LEVEL,
+  SET_SHOW_DDL,
+  SET_SHOW_GROUP,
 } from './constants';
 import {ITodoItem, ITodoItems} from '~/@types/todolist';
 import {
@@ -18,6 +21,7 @@ import {
   removeGroup,
 } from '@/api/todolist';
 import type {Dispatch} from 'redux';
+import {timeFillter} from '@/util';
 
 // 任务列表相关
 export const addTodoItemAction = (payload: ITodoItem) => ({
@@ -96,6 +100,45 @@ export const setShowDoneAction =
       dispatch({
         type: SET_SHOW_DONE,
         payload,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+export const setShowLevelAction =
+  (level: string) => async (dispatch: Dispatch) => {
+    try {
+      const list = await getTodoList();
+      dispatch({
+        type: SET_SHOW_LEVEL,
+        payload: list.filter(item => item.level === level),
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+export const setShowDdlAction = (ddl: string) => async (dispatch: Dispatch) => {
+  try {
+    const list = await getTodoList();
+    dispatch({
+      type: SET_SHOW_DDL,
+      payload: list.filter(item => timeFillter(item, ddl)),
+    });
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const setShowGroupAction =
+  (group: string) => async (dispatch: Dispatch) => {
+    try {
+      const list = await getTodoList();
+      dispatch({
+        type: SET_SHOW_GROUP,
+        payload:
+          group === '全部' ? list : list.filter(item => item.group === group),
       });
     } catch (e) {
       console.log(e);

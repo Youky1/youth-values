@@ -9,6 +9,9 @@ import {
   TOGGLE_TODO_ITEM,
   SEARCH_TODO_ITEM,
   SET_SHOW_DONE,
+  SET_SHOW_LEVEL,
+  SET_SHOW_DDL,
+  SET_SHOW_GROUP,
 } from './constants';
 const defaultState: DefaultTodoListState = {
   todolist: [],
@@ -18,6 +21,9 @@ export default function (state = defaultState, action: Action) {
   const {type, payload} = action;
   switch (type) {
     case SET_SHOW_DONE:
+    case SET_SHOW_LEVEL:
+    case SET_SHOW_DDL:
+    case SET_SHOW_GROUP:
     case SET_TODO_LIST: {
       newState.todolist = payload;
       return newState;

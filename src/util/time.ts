@@ -1,6 +1,32 @@
 import moment from 'moment';
-import {ITodoItems} from '~/@types/todolist';
+import {ITodoItems, ITodoItem} from '~/@types/todolist';
 import {NamedList} from '~/@types/store';
+
+const getTimeRange = () => {
+  const weekStart = moment().isoWeekday(1); //本周一
+  const weekEnd = moment().isoWeekday(7); //本周日
+  const monthStart = moment().month(moment().month()).startOf('month');
+  const monthEnd = moment().month(moment().month()).endOf('month');
+  return {weekStart, weekEnd, monthStart, monthEnd};
+};
+
+export const isBeforeNow = (time: Date) => {
+  const d = moment(time).date();
+  return time && d < moment().date();
+};
+
+export const isThisWeek = (time: Date) => {
+  const d = moment(time);
+  const {weekStart, weekEnd} = getTimeRange();
+  return time && d.isSameOrBefore(weekEnd) && d.isSameOrAfter(weekStart);
+};
+
+export const isThisMonth = (time: Date) => {
+  const d = moment(time);
+  const {monthStart, monthEnd} = getTimeRange();
+  console.log(monthStart, monthEnd);
+  return time && d.isSameOrBefore(monthEnd) && d.isSameOrAfter(monthStart);
+};
 
 export const formatTime = (time: Date) => moment(time).format('YY-MM-DD');
 
@@ -13,24 +39,35 @@ export const sortList = (list: ITodoItems) => {
   ];
   list.map(item => {
     const {ddl} = item;
-    if (ddl) {
-      const weekStart = moment().weekday(1); //本周一
-      const weekEnd = moment().weekday(7); //本周日
-      const monthStart = moment().month(moment().month()).startOf('month');
-      const monthEnd = moment().month(moment().month()).endOf('month');
-      const d = moment(ddl);
-      if (d.isBefore(moment())) {
-        res[0].list.push(item);
-      } else if (d.isBefore(weekEnd) && d.isAfter(weekStart)) {
-        res[1].list.push(item);
-      } else if (d.isBefore(monthEnd) && d.isAfter(monthStart)) {
-        res[2].list.push(item);
-      } else {
-        res[3].list.push(item);
-      }
+    if (isBeforeNow(ddl)) {
+      res[0].list.push(item);
+    } else if (isThisWeek(ddl)) {
+      res[1].list.push(item);
+    } else if (isThisMonth(ddl)) {
+      res[2].list.push(item);
     } else {
       res[3].list.push(item);
     }
   });
   return res;
+};
+
+export const timeFillter = (item: ITodoItem, target: string) => {
+  const {ddl} = item;
+  switch (target) {
+    case '全部': {
+      return true;
+    }
+    case '已过期': {
+      return isBeforeNow(ddl);
+    }
+    case '本周': {
+      return isThisWeek(ddl);
+    }
+    case '本月': {
+      return isThisMonth(ddl);
+    }
+    default:
+      return true;
+  }
 };

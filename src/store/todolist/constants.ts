@@ -11,3 +11,6 @@ export const DELETE_GROUP = 'todolsit/group/delete';
 // 更改显示相关的事件
 export const SEARCH_TODO_ITEM = 'todolist/search';
 export const SET_SHOW_DONE = 'todolist/show/done';
+export const SET_SHOW_LEVEL = 'todolist/show/level';
+export const SET_SHOW_DDL = 'todolist/show/ddl';
+export const SET_SHOW_GROUP = 'todolist/show/group';

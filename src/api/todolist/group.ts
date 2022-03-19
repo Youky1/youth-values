@@ -1,5 +1,6 @@
 import localforage from 'localforage';
 import {successTip, failTip} from '@/util';
+import {getTodoList, setTodoList} from './todoItem';
 
 export const getGroup = async () => {
   const groups = (await localforage.getItem('groupList')) || [];
@@ -36,6 +37,15 @@ export const removeGroup = async (name: string) => {
     } else {
       currentGroupList.splice(index, 1);
       await localforage.setItem('groupList', currentGroupList);
+      const list = await getTodoList();
+      await setTodoList(
+        list.map(item => {
+          if (item.group === name) {
+            item.group = '无';
+          }
+          return item;
+        })
+      );
     }
     successTip('删除分组成功');
   } catch (e) {
