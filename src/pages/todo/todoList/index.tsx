@@ -16,7 +16,6 @@ export default function TodoList() {
   const dispatch = useDispatch();
   // 初始化待办事项列表
   const todoList = useInitTodoList();
-  console.log(todoList);
 
   // 搜索事项回调
   const handleInput = useCallback((v: string) => {

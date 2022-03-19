@@ -1,4 +1,3 @@
-// eslint-disable-next-line node/no-extraneous-import
 import localforage from 'localforage';
 import {ITodoItem, ITodoItems} from '~/@types/todolist';
 

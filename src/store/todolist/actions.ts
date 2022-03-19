@@ -7,6 +7,7 @@ import {
   SEARCH_TODO_ITEM,
   ADD_GROUP,
   DELETE_GROUP,
+  SET_SHOW_DONE,
 } from './constants';
 import {ITodoItem, ITodoItems} from '~/@types/todolist';
 import {
@@ -25,7 +26,7 @@ export const addTodoItemAction = (payload: ITodoItem) => ({
 });
 export const setTodoItemListAction = (payload: ITodoItems) => ({
   type: SET_TODO_LIST,
-  payload,
+  payload: payload.filter(item => !item.done),
 });
 
 // 代办事项相关
@@ -81,6 +82,21 @@ export const deleteGroupAction =
     try {
       await removeGroup(name);
       dispatch({type: DELETE_GROUP, payload: name});
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+// 显示筛选相关
+export const setShowDoneAction =
+  (show: boolean) => async (dispatch: Dispatch) => {
+    try {
+      const list = await getTodoList();
+      const payload = show ? list : list.filter(item => !item.done);
+      dispatch({
+        type: SET_SHOW_DONE,
+        payload,
+      });
     } catch (e) {
       console.log(e);
     }

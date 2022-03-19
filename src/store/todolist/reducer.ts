@@ -8,6 +8,7 @@ import {
   DELETE_TODO_ITEM,
   TOGGLE_TODO_ITEM,
   SEARCH_TODO_ITEM,
+  SET_SHOW_DONE,
 } from './constants';
 const defaultState: DefaultTodoListState = {
   todolist: [],
@@ -16,6 +17,7 @@ export default function (state = defaultState, action: Action) {
   const newState = cloneDeep(state);
   const {type, payload} = action;
   switch (type) {
+    case SET_SHOW_DONE:
     case SET_TODO_LIST: {
       newState.todolist = payload;
       return newState;
