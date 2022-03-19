@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import s from './index.module.scss';
 import Editor from '@/component/editor';
-import {Drawer} from 'antd';
+import {Drawer, Tooltip} from 'antd';
 import {ITodoItem} from '~/@types/todolist';
 import {useDispatch} from 'react-redux';
 import {addTodoItemAction} from '@/store/todolist/actions';
@@ -25,7 +25,9 @@ export default function () {
   return (
     <div id={s.detail}>
       <div className={s.addIcon} onClick={showDrawer}>
-        <i className="iconfont icon-icon-"></i>
+        <Tooltip overlay="新建事项">
+          <i className="iconfont icon-icon-"></i>
+        </Tooltip>
       </div>
       <Drawer
         title="新建事项"

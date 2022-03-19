@@ -1,0 +1,16 @@
+.lineContainer {
+  @include flex(flex-start);
+  height: 60px;
+  width: 100%;
+  padding: 0 10px;
+  margin: 20px 0;
+  border: 1px solid $border-color;
+  border-radius: 20px;
+  padding: 0 40px;
+  :first-child {
+    width: 50%;
+    font-size: large;
+    margin: 0;
+    @include flex();
+  }
+}

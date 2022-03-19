@@ -1,5 +1,10 @@
 #list {
-  width: 50%;
+  margin: 20px auto;
+  width: $content-width;
   min-height: $main-height;
   @include flex(flex-start, center, column);
+  .listItem {
+    width: 100%;
+    padding-left: 20px;
+  }
 }

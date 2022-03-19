@@ -1,0 +1,15 @@
+.title {
+  width: 100%;
+  @include flex(flex-start);
+  height: 80;
+  .color {
+    height: 50px;
+    width: 10px;
+    background-color: $theme-color;
+    margin-right: 10px;
+  }
+  .text {
+    font-size: 30px;
+    font-family: SimSun;
+  }
+}

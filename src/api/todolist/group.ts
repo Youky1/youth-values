@@ -2,9 +2,16 @@
 import localforage from 'localforage';
 import {successTip, failTip} from '@/util';
 
-export const getGroupList = () => localforage.getItem('groupList');
+export const getGroup = async () => {
+  const groups = (await localforage.getItem('groupList')) || [];
+  return Promise.resolve(groups as Array<string>);
+};
 
 export const addGroup = async (name: string) => {
+  if (!name) {
+    failTip('分组名不能为空');
+    return;
+  }
   try {
     const currentGroupList =
       ((await localforage.getItem('groupList')) as Array<string>) || [];
@@ -13,17 +20,18 @@ export const addGroup = async (name: string) => {
       throw new Error('该元素已存在');
     }
     currentGroupList.push(name);
-    localforage.setItem('groupList', currentGroupList);
+    await localforage.setItem('groupList', currentGroupList);
     successTip('添加分组成功');
   } catch (e) {
     console.log(e);
   }
 };
 
-export const removeGroupList = async (index: number) => {
+export const removeGroup = async (name: string) => {
   try {
     const currentGroupList =
       ((await localforage.getItem('groupList')) as Array<string>) || [];
+    const index = currentGroupList.indexOf(name);
     if (index > currentGroupList.length) {
       throw new Error('下标不存在');
     } else {

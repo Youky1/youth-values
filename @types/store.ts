@@ -1,7 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {ITodoItem} from './todolist';
+import {ITodoItems} from './todolist';
+export interface NamedList {
+  title: string;
+  list: ITodoItems;
+}
 export interface DefaultTodoListState {
-  todolist: Array<ITodoItem>;
+  todolist: ITodoItems;
 }
 export interface Action {
   type: string;

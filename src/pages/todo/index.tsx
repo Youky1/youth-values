@@ -2,11 +2,14 @@ import React from 'react';
 import s from './index.module.scss';
 import TodoList from './todoList';
 import AddItem from './addItem';
-export default function Login() {
+import ListConfig from './listConfig';
+
+export default function () {
   return (
     <div id={s.todo}>
-      <TodoList></TodoList>
-      <AddItem></AddItem>
+      <TodoList />
+      <AddItem />
+      <ListConfig />
     </div>
   );
 }

@@ -4,7 +4,8 @@ import {setTodoItemListAction} from '@/store/todolist/actions';
 import {ITodoItems} from '~/@types/todolist';
 import {RootState} from '~/@types/store';
 import {useEffect, useState} from 'react';
-import {getGroupList} from '@/api/todolist';
+import {getGroup} from '@/api/todolist';
+import {sortList} from '@/util';
 
 // 获取代办列表
 export const useInitTodoList = () => {
@@ -14,16 +15,16 @@ export const useInitTodoList = () => {
       .then(list => dispatch(setTodoItemListAction(list as ITodoItems)))
       .catch(e => console.log(e));
   }, []);
-  return useSelector((state: RootState) => state.todolist.todolist);
+  return useSelector((state: RootState) => sortList(state.todolist.todolist));
 };
 
 // 获取代办事项分组
 export const useInitGroups = () => {
   const [groupArr, setGroupArr] = useState<Array<string>>([]);
   useEffect(() => {
-    getGroupList().then(data => {
-      setGroupArr(['无', ...(data as Array<string>)]);
+    getGroup().then(data => {
+      setGroupArr(data);
     });
-  }, []);
+  });
   return groupArr;
 };

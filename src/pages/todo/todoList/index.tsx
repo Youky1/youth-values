@@ -1,24 +1,22 @@
-import React, {useCallback, useRef, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import s from './index.module.scss';
 import TodoItem from './todoItem';
 import Input from '~/src/component/input';
 import {useInitTodoList} from '@/hooks/todolist';
-import {Drawer, Modal} from 'antd';
+import {Drawer} from 'antd';
 import Editor from '~/src/component/editor';
 import {ITodoItem} from '~/@types/todolist';
-import {updateTodoItem, deleteTodoItem} from '@/api/todolist';
-import {
-  updateTodoItemAction,
-  deleteTodoItemAction,
-  searchItemAction,
-} from '@/store/todolist/actions';
+import {updateTodoItem} from '@/api/todolist';
+import {updateTodoItemAction, searchItemAction} from '@/store/todolist/actions';
 import {useDispatch} from 'react-redux';
 import {successTip, failTip} from '@/util';
+import Title from '@/component/title';
 
 export default function TodoList() {
   const dispatch = useDispatch();
   // 初始化待办事项列表
   const todoList = useInitTodoList();
+  console.log(todoList);
 
   // 搜索事项回调
   const handleInput = useCallback((v: string) => {
@@ -47,30 +45,6 @@ export default function TodoList() {
     }
   };
 
-  // 控制弹窗的变量
-  const [showModal, setShowModal] = useState(false);
-  const currentDeleteId = useRef<number>(-1);
-  const handleCancel = () => {
-    setShowModal(false);
-  };
-  const handleShow = (id: number) => {
-    currentDeleteId.current = id;
-    setShowModal(true);
-  };
-
-  // 删除事项
-  const handleDelete = async () => {
-    try {
-      console.log('删除ID：', currentDeleteId.current);
-      await deleteTodoItem(currentDeleteId.current);
-      dispatch(deleteTodoItemAction(currentDeleteId.current));
-      handleCancel();
-      successTip('删除成功');
-    } catch (e) {
-      failTip(String(e));
-    }
-  };
-
   return (
     <div id={s.list}>
       <Input
@@ -78,21 +52,18 @@ export default function TodoList() {
         callback={handleInput}
         tip="搜索成功"
         allowEmpty
+        placeholder="输入代办名称进行搜索"
       />
-      {todoList.map(item => (
-        <TodoItem
-          item={item}
-          key={item.id}
-          callback={handleClick}
-          deleteCallback={handleShow}
-        />
+      {todoList.map(i => (
+        <React.Fragment key={i.title}>
+          <Title>{i.title}</Title>
+          <div className={s.listItem}>
+            {i.list.map(item => (
+              <TodoItem item={item} key={item.id} callback={handleClick} />
+            ))}
+          </div>
+        </React.Fragment>
       ))}
-      <Modal
-        title="确认要删除该事项吗？"
-        visible={showModal}
-        onCancel={handleCancel}
-        onOk={handleDelete}
-      />
       <Drawer
         title="新建事项"
         placement="right"

@@ -1,14 +1,14 @@
 import {DefaultTodoListState, Action} from '~/@types/store';
+import {ITodoItems} from '~/@types/todolist';
 import {cloneDeep} from 'lodash';
 import {
-  SET_TODO_ITEM,
+  SET_TODO_LIST,
   ADD_TODO_ITEM,
   UPDATE_TODO_ITEM,
   DELETE_TODO_ITEM,
   TOGGLE_TODO_ITEM,
   SEARCH_TODO_ITEM,
 } from './constants';
-import {ITodoItems} from '~/@types/todolist';
 const defaultState: DefaultTodoListState = {
   todolist: [],
 };
@@ -16,7 +16,7 @@ export default function (state = defaultState, action: Action) {
   const newState = cloneDeep(state);
   const {type, payload} = action;
   switch (type) {
-    case SET_TODO_ITEM: {
+    case SET_TODO_LIST: {
       newState.todolist = payload;
       return newState;
     }

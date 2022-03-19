@@ -6,6 +6,7 @@ import renderRoutes from '@/routes';
 import routes from '@/routes/routes';
 import Header from '@/layout/header';
 import Footer from '@/layout/footer';
+import './style/main.scss';
 
 import 'antd/dist/antd.css';
 function App() {

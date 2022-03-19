@@ -1,7 +1,7 @@
 .listItem {
   @include flex(flex-start);
-  width: 600px;
-  height: 60px;
+  width: $content-width;
+  height: 80px;
   margin-top: 10px;
   border: 1px solid $border-color;
   border-radius: 4px;
