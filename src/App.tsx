@@ -1,9 +1,8 @@
 import React from 'react';
-import {HashRouter as Router, Routes} from 'react-router-dom';
+import {HashRouter as Router} from 'react-router-dom';
 import {Provider} from 'react-redux';
 import store from '@/store';
-import renderRoutes from '@/routes';
-import routes from '@/routes/routes';
+import Pages from '@/routes';
 import Header from '@/layout/header';
 import Footer from '@/layout/footer';
 import './style/main.scss';
@@ -16,7 +15,7 @@ function App() {
         <Router>
           <Header />
           <div style={{flex: 1}}>
-            <Routes>{renderRoutes(routes)}</Routes>
+            <Pages />
           </div>
           <Footer />
         </Router>

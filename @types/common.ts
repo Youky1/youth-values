@@ -1,4 +1,3 @@
-import {type} from 'os';
 import {ITodoItem} from './todolist';
 
 export interface HeaderMenu {

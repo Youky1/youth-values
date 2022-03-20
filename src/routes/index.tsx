@@ -1,19 +1,12 @@
 import React from 'react';
-import {Routes, Route} from 'react-router-dom';
-import {RouteConfig} from '~/@types/route';
-export default function renderRoutes(route: RouteConfig) {
+import {Routes, Route, Navigate} from 'react-router-dom';
+import Todo from '@/pages/todo';
+export default function renderRoutes() {
   return (
-    <>
-      {route.map(item => (
-        <Route
-          path={item.path}
-          element={item.element}
-          key={item.path}
-          index={item.index ? true : false}
-        >
-          {item.children && renderRoutes(item.children)}
-        </Route>
-      ))}
-    </>
+    <Routes>
+      <Route path="/" element={<Navigate to="/todo" />}></Route>
+      <Route path="/todo" element={<Todo />}></Route>
+      <Route></Route>
+    </Routes>
   );
 }
