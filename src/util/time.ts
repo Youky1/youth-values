@@ -3,16 +3,19 @@ import {ITodoItems, ITodoItem} from '~/@types/todolist';
 import {NamedList} from '~/@types/store';
 
 const getTimeRange = () => {
-  const weekStart = moment().isoWeekday(1); //本周一
-  const weekEnd = moment().isoWeekday(7); //本周日
-  const monthStart = moment().month(moment().month()).startOf('month');
-  const monthEnd = moment().month(moment().month()).endOf('month');
+  const weekStart = moment().isoWeekday(1).startOf('day'); //本周一
+  const weekEnd = moment().isoWeekday(7).endOf('day'); //本周日
+  const monthStart = moment().startOf('month').startOf('day');
+  const monthEnd = moment().endOf('month').endOf('day');
   return {weekStart, weekEnd, monthStart, monthEnd};
 };
 
 export const isBeforeNow = (time: Date) => {
-  const d = moment(time).date();
-  return time && d < moment().date();
+  const d = moment(time);
+  if (time && d.isBefore(moment())) {
+    console.log(d.endOf('day'), moment().endOf('day'));
+  }
+  return time && d.endOf('day').isBefore(moment().endOf('day'));
 };
 
 export const isThisWeek = (time: Date) => {
@@ -24,7 +27,6 @@ export const isThisWeek = (time: Date) => {
 export const isThisMonth = (time: Date) => {
   const d = moment(time);
   const {monthStart, monthEnd} = getTimeRange();
-  console.log(monthStart, monthEnd);
   return time && d.isSameOrBefore(monthEnd) && d.isSameOrAfter(monthStart);
 };
 
