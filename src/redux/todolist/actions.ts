@@ -96,10 +96,13 @@ export const setShowDoneAction =
   (show: boolean) => async (dispatch: Dispatch) => {
     try {
       const list = await getTodoList();
-      const payload = show ? list : list.filter(item => !item.done);
+      const payloadList = show ? list : list.filter(item => !item.done);
       dispatch({
         type: SET_SHOW_DONE,
-        payload,
+        payload: {
+          isShowDone: show,
+          list: payloadList,
+        },
       });
     } catch (e) {
       console.log(e);
@@ -112,7 +115,8 @@ export const setShowLevelAction =
       const list = await getTodoList();
       dispatch({
         type: SET_SHOW_LEVEL,
-        payload: list.filter(item => item.level === level),
+        payload:
+          level === '全部' ? list : list.filter(item => item.level === level),
       });
     } catch (e) {
       console.log(e);

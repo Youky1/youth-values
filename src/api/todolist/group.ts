@@ -16,14 +16,13 @@ export const addGroup = async (name: string) => {
     const currentGroupList =
       ((await localforage.getItem('groupList')) as Array<string>) || [];
     if (currentGroupList.includes(name)) {
-      failTip('该元素已存在');
-      throw new Error('该元素已存在');
+      throw new Error('该分组已存在');
     }
     currentGroupList.push(name);
     await localforage.setItem('groupList', currentGroupList);
     successTip('添加分组成功');
   } catch (e) {
-    console.log(e);
+    failTip(e);
   }
 };
 

@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
 import s from './index.module.scss';
 import Title from '@/component/title';
-import {Select, Switch} from 'antd';
+import {message, Select, Switch} from 'antd';
 import {useInitGroups} from '@/hooks/todolist';
 import {Input} from 'antd';
 import {addGroup, removeGroup} from '@/api/todolist/group';
@@ -11,7 +11,8 @@ import {
   setShowLevelAction,
   setShowDdlAction,
   setShowGroupAction,
-} from '@/store/todolist/actions';
+} from '~/src/redux/todolist/actions';
+import {failTip} from '~/src/util';
 
 const {Option} = Select;
 export default function () {
@@ -24,15 +25,23 @@ export default function () {
   // 添加分组
   const [newGroupName, setNewGroupName] = useState('');
   const handleNewGroup = async () => {
-    await addGroup(newGroupName);
-    setNewGroupName('');
+    if (newGroupName) {
+      await addGroup(newGroupName);
+      setNewGroupName('');
+    } else {
+      failTip('新增分组名不能为空');
+    }
   };
 
   // 删除分组
   const [currentGroup, setCurrentGroup] = useState('');
   const handleDeleteGroup = async () => {
-    await removeGroup(currentGroup);
-    setCurrentGroup('');
+    if (currentGroup) {
+      await removeGroup(currentGroup);
+      setCurrentGroup('');
+    } else {
+      failTip('还未选中分组');
+    }
   };
 
   /*********************筛选显示相关*********************/
@@ -87,6 +96,7 @@ export default function () {
           <Option value="中">中</Option>
           <Option value="低">低</Option>
           <Option value="无">无</Option>
+          <Option value="全部">全部</Option>
         </Select>
       </div>
       <div className="lineContainer">

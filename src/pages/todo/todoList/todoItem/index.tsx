@@ -2,9 +2,9 @@ import React, {useState} from 'react';
 import s from './index.module.scss';
 import {ITodoItem} from '~/@types/todolist';
 import {formatTime} from '@/util/time';
-import {toggleTodoItemAction} from '@/store/todolist/actions';
+import {toggleTodoItemAction} from '~/src/redux/todolist/actions';
 import {useDispatch} from 'react-redux';
-import {deleteTodoItemAction} from '@/store/todolist/actions';
+import {deleteTodoItemAction} from '~/src/redux/todolist/actions';
 import {Modal} from 'antd';
 import {successTip, failTip} from '@/util';
 

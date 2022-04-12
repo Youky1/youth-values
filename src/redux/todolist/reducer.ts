@@ -15,17 +15,22 @@ import {
 } from './constants';
 const defaultState: DefaultTodoListState = {
   todolist: [],
+  isShowDone: true,
 };
 export default function (state = defaultState, action: Action) {
   const newState = cloneDeep(state);
   const {type, payload} = action;
   switch (type) {
-    case SET_SHOW_DONE:
     case SET_SHOW_LEVEL:
     case SET_SHOW_DDL:
     case SET_SHOW_GROUP:
     case SET_TODO_LIST: {
       newState.todolist = payload;
+      return newState;
+    }
+    case SET_SHOW_DONE: {
+      newState.isShowDone = payload.isShowDone;
+      newState.todolist = payload.list;
       return newState;
     }
     case ADD_TODO_ITEM: {

@@ -1,6 +1,6 @@
 import {useDispatch, useSelector} from 'react-redux';
 import {getTodoList} from '@/api/todolist/todoItem';
-import {setTodoItemListAction} from '@/store/todolist/actions';
+import {setTodoItemListAction} from '~/src/redux/todolist/actions';
 import {ITodoItems} from '~/@types/todolist';
 import {RootState} from '~/@types/store';
 import {useEffect, useState} from 'react';

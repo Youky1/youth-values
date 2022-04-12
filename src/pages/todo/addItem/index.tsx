@@ -4,7 +4,7 @@ import Editor from '@/component/editor';
 import {Drawer, Tooltip} from 'antd';
 import {ITodoItem} from '~/@types/todolist';
 import {useDispatch} from 'react-redux';
-import {addTodoItemAction} from '@/store/todolist/actions';
+import {addTodoItemAction} from '~/src/redux/todolist/actions';
 import {addTodoItem} from '@/api/todolist';
 import {successTip} from '@/util';
 

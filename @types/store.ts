@@ -6,6 +6,7 @@ export interface NamedList {
 }
 export interface DefaultTodoListState {
   todolist: ITodoItems;
+  isShowDone: boolean;
 }
 export interface Action {
   type: string;

@@ -1,7 +1,7 @@
 import React from 'react';
 import {HashRouter as Router} from 'react-router-dom';
 import {Provider} from 'react-redux';
-import store from '@/store';
+import store from '@/redux';
 import Pages from '@/routes';
 import Header from '@/layout/header';
 import Footer from '@/layout/footer';
@@ -14,7 +14,7 @@ function App() {
       <Provider store={store}>
         <Router>
           <Header />
-          <div style={{flex: 1}}>
+          <div style={{flex: 1, minHeight: '80vh'}}>
             <Pages />
           </div>
           <Footer />

@@ -3,18 +3,21 @@ import s from './index.module.scss';
 import TodoItem from './todoItem';
 import Input from '~/src/component/input';
 import {useInitTodoList} from '@/hooks/todolist';
-import {Drawer} from 'antd';
+import {Drawer, Empty} from 'antd';
 import Editor from '~/src/component/editor';
 import {ITodoItem} from '~/@types/todolist';
 import {updateTodoItem} from '@/api/todolist';
-import {updateTodoItemAction, searchItemAction} from '@/store/todolist/actions';
+import {
+  updateTodoItemAction,
+  searchItemAction,
+} from '~/src/redux/todolist/actions';
 import {useDispatch} from 'react-redux';
 import {successTip, failTip} from '@/util';
 import Title from '@/component/title';
 
 export default function TodoList() {
   const dispatch = useDispatch();
-  // 初始化待办事项列表
+  // 初始化待办事项列表，分为title和list
   const todoList = useInitTodoList();
 
   // 搜索事项回调
@@ -53,16 +56,21 @@ export default function TodoList() {
         allowEmpty
         placeholder="输入代办名称进行搜索"
       />
-      {todoList.map(i => (
-        <React.Fragment key={i.title}>
-          <Title>{i.title}</Title>
-          <div className={s.listItem}>
-            {i.list.map(item => (
-              <TodoItem item={item} key={item.id} callback={handleClick} />
-            ))}
-          </div>
-        </React.Fragment>
-      ))}
+      {todoList.map(i =>
+        i.list.length ? (
+          <React.Fragment key={i.title}>
+            <Title>{i.title}</Title>
+            <div className={s.listItem}>
+              {i.list.map(item => (
+                <TodoItem item={item} key={item.id} callback={handleClick} />
+              ))}
+            </div>
+          </React.Fragment>
+        ) : null
+      )}
+      {todoList.every(i => i.list.length === 0) && (
+        <Empty className={s.empty} />
+      )}
       <Drawer
         title="新建事项"
         placement="right"
