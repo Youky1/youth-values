@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import {defaultTimingState} from './timing';
 import {ITodoItems} from './todolist';
 export interface NamedList {
   title: string;
@@ -15,4 +16,5 @@ export interface Action {
 
 export interface RootState {
   todolist: DefaultTodoListState;
+  timing: defaultTimingState;
 }

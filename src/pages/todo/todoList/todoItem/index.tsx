@@ -2,11 +2,15 @@ import React, {useState} from 'react';
 import s from './index.module.scss';
 import {ITodoItem} from '~/@types/todolist';
 import {formatTime} from '@/util/time';
-import {toggleTodoItemAction} from '~/src/redux/todolist/actions';
+import {
+  toggleTodoItemAction,
+  deleteTodoItemAction,
+} from '@/redux/todolist/actions';
 import {useDispatch} from 'react-redux';
-import {deleteTodoItemAction} from '~/src/redux/todolist/actions';
 import {Modal} from 'antd';
 import {successTip, failTip} from '@/util';
+import {useNavigate} from 'react-router';
+import {setCurrentEventAction} from '@/redux/timing/actions';
 
 const levels = new Map([
   ['高', '#f56c6c'],
@@ -22,6 +26,7 @@ export default function Login({
   callback: any;
 }) {
   const {level, name, done, ddl} = item;
+  const nav = useNavigate();
 
   const handleClick = () => {
     callback(item);
@@ -50,12 +55,17 @@ export default function Login({
     }
   };
 
+  // 使用该事件进行计时
+  const handleTimingOnItem = async () => {
+    dispatch(setCurrentEventAction(name));
+    nav('/timing');
+  };
+
   return (
     <div className={s.listItem}>
       <div
         className={s.itemStatus}
         style={{backgroundColor: levels.get(level || '无')}}
-        onClick={() => setShowModal(true)}
       ></div>
       <i
         onClick={toggleItem}
@@ -65,6 +75,16 @@ export default function Login({
         style={{
           color: done ? '#67c23a' : '#ddd',
         }}
+      ></i>
+      <i
+        className={s.itemBtn + ' iconfont icon-jishi'}
+        style={{color: '#409eff', fontSize: 28}}
+        onClick={handleTimingOnItem}
+      ></i>
+      <i
+        className={s.itemBtn + ' iconfont icon-shanchu'}
+        style={{color: '#f56c6c'}}
+        onClick={() => setShowModal(true)}
       ></i>
       <span
         className={s.itemText + (done ? ' ' + s.doneText : '')}

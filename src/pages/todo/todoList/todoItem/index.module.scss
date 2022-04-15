@@ -10,10 +10,6 @@
   .itemStatus {
     width: 14px;
     height: 100%;
-    transition: all 0.5s;
-    &:hover {
-      width: 30px;
-    }
   }
   .itemBtn {
     font-size: 30px;
@@ -22,7 +18,7 @@
   }
   .itemText {
     flex: 1;
-    font-size: 18px;
+    font-size: 22px;
     @include ellipsis();
   }
   .doneText {
@@ -30,7 +26,7 @@
     text-decoration: line-through;
   }
   .itemDate {
-    font-size: 12px;
+    font-size: 20px;
     color: $gray;
     align-self: flex-end;
   }

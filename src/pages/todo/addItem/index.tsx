@@ -7,6 +7,7 @@ import {useDispatch} from 'react-redux';
 import {addTodoItemAction} from '~/src/redux/todolist/actions';
 import {addTodoItem} from '@/api/todolist';
 import {successTip} from '@/util';
+import AddButton from '~/src/component/addButton';
 
 export default function () {
   const [visible, setVisible] = useState(false);
@@ -24,11 +25,7 @@ export default function () {
   };
   return (
     <div id={s.detail}>
-      <div className={s.addIcon} onClick={showDrawer}>
-        <Tooltip overlay="新建事项">
-          <i className="iconfont icon-icon-"></i>
-        </Tooltip>
-      </div>
+      <AddButton overlay="添加待办事项" callback={showDrawer} />
       <Drawer
         title="新建事项"
         placement="right"

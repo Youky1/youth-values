@@ -1,2 +1,20 @@
+import {Event} from '~/@types/timing';
 export * from './message';
 export * from './time';
+const colors = ['#99CCFF', '#3399CC', '#66CCCC', '#009999'];
+export function getCardColor(e: Event) {
+  const len = e.record.reduce.length;
+  let color;
+  if (len <= 5) {
+    color = colors[0];
+  } else if (len < 20) {
+    color = colors[1];
+  } else if (len < 50) {
+    color = colors[1];
+  } else {
+    color = colors[2];
+  }
+  return {
+    backgroundColor: color,
+  };
+}
