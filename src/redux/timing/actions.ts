@@ -1,6 +1,6 @@
 import * as Con from './constants';
 import type {Dispatch} from 'redux';
-import {addEvent, ensureEvent} from '@/api/timing';
+import {addEvent, ensureEvent, deleteEvent} from '@/api/timing';
 import {failTip, successTip} from '~/src/util';
 import {EventList} from '~/@types/timing';
 
@@ -32,6 +32,7 @@ export const setCurrentEventAction = (eventName: string) => {
         type: Con.ADD_EVENT,
         payload: eventName,
       });
+      successTip('当前事件不存在，已添加');
     }
     dispatch({
       type: Con.SET_CURRENT_EVENT,
@@ -39,3 +40,17 @@ export const setCurrentEventAction = (eventName: string) => {
     });
   };
 };
+
+export const deleteEventAction =
+  (name: string) => async (dispatch: Dispatch) => {
+    try {
+      await deleteEvent(name);
+      dispatch({
+        type: Con.DELETE_EVENT,
+        payload: name,
+      });
+      successTip('删除事件成功');
+    } catch (e) {
+      failTip(e);
+    }
+  };

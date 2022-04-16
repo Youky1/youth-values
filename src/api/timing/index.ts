@@ -32,3 +32,15 @@ export const ensureEvent = async (name: string) => {
   }
   return true;
 };
+
+// 删除事件
+export const deleteEvent = async (name: string) => {
+  const list = await getEventList();
+  for (let i = 0; i < list.length; i++) {
+    if ((list[i].name = name)) {
+      list.splice(i, 1);
+      await setEventList(list);
+      return;
+    }
+  }
+};

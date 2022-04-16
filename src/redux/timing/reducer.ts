@@ -25,6 +25,18 @@ export default function (state = defaultState, action: Action) {
       newState.currentEvent = payload;
       break;
     }
+    case Con.DELETE_EVENT: {
+      if (newState.currentEvent?.name === payload) {
+        newState.currentEvent = null;
+      }
+      for (let i = 0; i < newState.eventList.length; i++) {
+        if (newState.eventList[i].name === payload) {
+          newState.eventList.splice(i, 1);
+          break;
+        }
+      }
+      break;
+    }
   }
   return newState;
 }
