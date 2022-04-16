@@ -1,4 +1,4 @@
-import {Event} from '~/@types/timing';
+import {Event, EventList} from '~/@types/timing';
 export * from './message';
 export * from './time';
 const colors = ['#99CCFF', '#3399CC', '#66CCCC', '#009999'];
@@ -18,3 +18,11 @@ export function getCardColor(e: Event) {
     backgroundColor: color,
   };
 }
+export const getIndex = (list: EventList, name: string) => {
+  for (let i = 0; i < list.length; i++) {
+    if ((list[i].name = name)) {
+      return i;
+    }
+  }
+  return -1;
+};

@@ -2,6 +2,7 @@ import {defaultTimingState} from '~/@types/timing';
 import {Action} from '~/@types/store';
 import {cloneDeep} from 'lodash';
 import * as Con from './constants';
+import {getIndex} from '@/util';
 
 const defaultState: defaultTimingState = {
   eventList: [],
@@ -29,13 +30,14 @@ export default function (state = defaultState, action: Action) {
       if (newState.currentEvent?.name === payload) {
         newState.currentEvent = null;
       }
-      for (let i = 0; i < newState.eventList.length; i++) {
-        if (newState.eventList[i].name === payload) {
-          newState.eventList.splice(i, 1);
-          break;
-        }
-      }
+      const i = getIndex(newState.eventList, payload);
+      newState.eventList.splice(i, 1);
       break;
+    }
+    case Con.EDIT_EVENT: {
+      const {oldName, newName} = payload;
+      const i = getIndex(newState.eventList, oldName);
+      newState.eventList[i].name = newName;
     }
   }
   return newState;

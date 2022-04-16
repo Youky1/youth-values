@@ -1,6 +1,6 @@
 import * as Con from './constants';
 import type {Dispatch} from 'redux';
-import {addEvent, ensureEvent, deleteEvent} from '@/api/timing';
+import {addEvent, ensureEvent, deleteEvent, editEvent} from '@/api/timing';
 import {failTip, successTip} from '~/src/util';
 import {EventList} from '~/@types/timing';
 
@@ -50,6 +50,20 @@ export const deleteEventAction =
         payload: name,
       });
       successTip('删除事件成功');
+    } catch (e) {
+      failTip(e);
+    }
+  };
+
+export const editEventAction =
+  (oldName: string, newName: string) => async (dispatch: Dispatch) => {
+    try {
+      await editEvent(oldName, newName);
+      dispatch({
+        type: Con.EDIT_EVENT,
+        payload: {oldName, newName},
+      });
+      successTip('编辑事件成功');
     } catch (e) {
       failTip(e);
     }
