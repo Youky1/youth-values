@@ -6,6 +6,7 @@ export interface Record {
 export interface Event {
   name: string; // 事件名称
   record: Array<Record>; // 计时历史
+  isDone: boolean;
 }
 export type EventList = Array<Event>;
 export interface defaultTimingState {

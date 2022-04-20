@@ -19,11 +19,13 @@ export default function (state = defaultState, action: Action) {
       break;
     }
     case Con.ADD_EVENT: {
-      newState.eventList.push({name: payload, record: []});
+      newState.eventList.push({name: payload, record: [], isDone: false});
       break;
     }
     case Con.SET_CURRENT_EVENT: {
       newState.currentEvent = payload;
+      const i = getIndex(newState.eventList, payload);
+      newState.eventList[i].isDone = false;
       break;
     }
     case Con.DELETE_EVENT: {
@@ -49,6 +51,15 @@ export default function (state = defaultState, action: Action) {
       for (let i = 0; i < newState.eventList.length; i++) {
         if (newState.eventList[i].name === name) {
           newState.eventList[i].record.push({start, end, length});
+          break;
+        }
+      }
+      break;
+    }
+    case Con.TOOGLE_EVENT_DONE: {
+      for (let i = 0; i < newState.eventList.length; i++) {
+        if (newState.eventList[i].name === payload) {
+          newState.eventList[i].isDone = !newState.eventList[i].isDone;
           break;
         }
       }

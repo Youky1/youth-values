@@ -9,7 +9,9 @@ import {
   editEventAction,
   setCurrentEventAction,
   setIsTimingAction,
+  toogleEventDoneAction,
 } from '@/redux/timing/actions';
+const {confirm} = Modal;
 
 export default function ({item}: {item: Event}) {
   const dispatch = useDispatch();
@@ -28,12 +30,28 @@ export default function ({item}: {item: Event}) {
       failTip('名称未变');
     } else {
       dispatch(editEventAction(item.name, inputValue));
+      setIsEdit(false);
     }
   };
 
   // 删除事件
   const handleDelete = () => {
-    dispatch(deleteEventAction(item.name));
+    confirm({
+      title: '确定删除事件吗？该事件将不再显示且专注记录将删除',
+      onOk() {
+        dispatch(deleteEventAction(item.name));
+      },
+    });
+  };
+
+  // 完成事件
+  const handleFinish = () => {
+    confirm({
+      title: '确定完成事件吗？该事件将不再显示，但专注记录仍然保存',
+      onOk() {
+        dispatch(toogleEventDoneAction(item.name));
+      },
+    });
   };
 
   return (
@@ -48,6 +66,9 @@ export default function ({item}: {item: Event}) {
             className="iconfont icon-bianji"
             onClick={() => setIsEdit(true)}
           ></i>
+        </Tooltip>
+        <Tooltip overlay="完成" placement="bottom">
+          <i className="iconfont icon-wancheng" onClick={handleFinish}></i>
         </Tooltip>
         <Tooltip overlay="删除" placement="bottom">
           <i className="iconfont icon-shanchu" onClick={handleDelete}></i>

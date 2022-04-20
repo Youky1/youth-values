@@ -20,7 +20,7 @@ export const addEvent = async (name: string) => {
   if (await isEventExsit(name)) {
     return Promise.reject('该事件已存在');
   } else {
-    list.push({name, record: []});
+    list.push({name, record: [], isDone: false});
     return setEventList(list);
   }
 };
@@ -30,8 +30,13 @@ export const ensureEvent = async (name: string) => {
   if (!(await isEventExsit(name))) {
     await addEvent(name);
     return false;
+  } else {
+    const list = await getEventList();
+    const i = getIndex(list, name);
+    list[i].isDone = false;
+    await setEventList(list);
+    return true;
   }
-  return true;
 };
 
 // 删除事件
@@ -58,13 +63,16 @@ export const addTimingRecord = async (
   length: number
 ) => {
   const eventList = await getEventList();
-  console.log('name is:', name);
-  for (let i = 0; i < eventList.length; i++) {
-    if (eventList[i].name === name) {
-      eventList[i].record.push({start, end, length});
-      console.log(eventList[i].record);
-      break;
-    }
-  }
+  const list = await getEventList();
+  const i = getIndex(list, name);
+  eventList[i].record.push({start, end, length});
   await setEventList(eventList);
+};
+
+// 改变事件完成状态
+export const toogleEventDone = async (name: string) => {
+  const list = await getEventList();
+  const i = getIndex(list, name);
+  list[i].isDone = !list[i].isDone;
+  await setEventList(list);
 };

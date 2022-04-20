@@ -6,6 +6,7 @@ import {
   deleteEvent,
   editEvent,
   addTimingRecord,
+  toogleEventDone,
 } from '@/api/timing';
 import {failTip, successTip} from '~/src/util';
 import {EventList} from '~/@types/timing';
@@ -95,6 +96,16 @@ export const addRecordAction =
         },
       });
     } catch (e) {
-      console.log(e);
+      failTip(e);
+    }
+  };
+
+export const toogleEventDoneAction =
+  (name: string) => async (dispatch: Dispatch) => {
+    try {
+      await toogleEventDone(name);
+      dispatch({type: Con.TOOGLE_EVENT_DONE, payload: name});
+    } catch (e) {
+      failTip(e);
     }
   };

@@ -4,9 +4,10 @@ import {useInitEventList} from '@/hooks/timing';
 import AddButton from '@/component/addButton';
 import Clock from './components/Clock';
 import ItemCard from './components/ItemCard';
+import DoneList from './components/DoneList';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '~/@types/store';
-import {Modal, Input} from 'antd';
+import {Modal, Input, Tooltip, Drawer} from 'antd';
 import {addEventAction} from '@/redux/timing/actions';
 export default function () {
   const eventList = useInitEventList();
@@ -19,15 +20,38 @@ export default function () {
     dispatch(addEventAction(newEvent));
     setShowAdd(false);
   };
+
+  const [isShowing, setIsShowing] = useState(false);
+  const showDrawer = () => setIsShowing(true);
+  const hideDrawer = () => setIsShowing(false);
   return (
     <div className={s.timing}>
+      {/* 事件列表 */}
       <main>
         {eventList.map(item => (
           <ItemCard key={item.name} item={item}></ItemCard>
         ))}
       </main>
-      <AddButton overlay="添加计时事件" callback={() => setShowAdd(true)} />
+
+      {/* 计时器 */}
       {isTiming && <Clock />}
+
+      {/* 右下角按钮 */}
+      <AddButton overlay="添加计时事件" callback={() => setShowAdd(true)} />
+      <div
+        className="mainButton"
+        onClick={showDrawer}
+        style={{
+          right: 100,
+          height: 60,
+        }}
+      >
+        <Tooltip overlay="查看已完成事件">
+          <i className="iconfont icon-gengduo"></i>
+        </Tooltip>
+      </div>
+
+      {/* 新建事件 */}
       <Modal
         title="新建计时事件"
         visible={showAdd}
@@ -40,6 +64,17 @@ export default function () {
           onChange={e => setNewEvent(e.target.value)}
         />
       </Modal>
+
+      {/* 查看以完成事件 */}
+      <Drawer
+        width={640}
+        visible={isShowing}
+        title="已完成计时事项"
+        placement="left"
+        onClose={hideDrawer}
+      >
+        <DoneList />
+      </Drawer>
     </div>
   );
 }

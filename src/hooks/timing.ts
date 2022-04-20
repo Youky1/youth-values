@@ -14,5 +14,7 @@ export const useInitEventList = () => {
       })
       .catch(err => console.log(err));
   }, []);
-  return useSelector((state: RootState) => state.timing.eventList);
+  return useSelector((state: RootState) =>
+    state.timing.eventList.filter(item => !item.isDone)
+  );
 };

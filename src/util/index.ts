@@ -20,7 +20,7 @@ export function getCardColor(e: Event) {
 }
 export const getIndex = (list: EventList, name: string) => {
   for (let i = 0; i < list.length; i++) {
-    if ((list[i].name = name)) {
+    if (list[i].name === name) {
       return i;
     }
   }

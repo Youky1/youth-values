@@ -5,3 +5,4 @@ export const DELETE_EVENT = 'DELETE_EVENT';
 export const EDIT_EVENT = 'EDIT_EVENT';
 export const SET_IS_TIMING = 'SET_IS_TIMING';
 export const ADD_TIMING_RECORD = 'ADD_TIMING_RECORD';
+export const TOOGLE_EVENT_DONE = 'TOOGLE_EVENT_DONE';
