@@ -13,7 +13,14 @@ export default function () {
   };
   return (
     <div>
-      <div className={s.icon} onClick={showDrawer}>
+      <div
+        className="mainButton"
+        onClick={showDrawer}
+        style={{
+          right: 100,
+          height: 60,
+        }}
+      >
         <Tooltip overlay="显示设置">
           <i className="iconfont icon-shezhi"></i>
         </Tooltip>

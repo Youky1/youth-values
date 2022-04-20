@@ -14,3 +14,16 @@
     @include flex();
   }
 }
+.mainButton {
+  position: fixed;
+  bottom: 40px;
+  width: 60px;
+  border-radius: 50%;
+  background-color: $theme-color;
+  @include flex();
+  color: #fff;
+  cursor: pointer;
+  i {
+    font-size: 40px;
+  }
+}

@@ -1,18 +1,3 @@
-.icon {
-  position: fixed;
-  bottom: 40px;
-  right: 100px;
-  height: 60px;
-  width: 60px;
-  border-radius: 50%;
-  background-color: $theme-color;
-  @include flex();
-  color: #fff;
-  cursor: pointer;
-  i {
-    font-size: 40px;
-  }
-}
 .groupContainer {
   @include flex();
   width: 400px;

@@ -1,6 +1,5 @@
 import {Tooltip} from 'antd';
 import React from 'react';
-import s from './index.module.scss';
 export default function ({
   callback,
   overlay,
@@ -9,7 +8,11 @@ export default function ({
   overlay: string;
 }) {
   return (
-    <div className={s.addIcon} onClick={callback}>
+    <div
+      className={'mainButton'}
+      style={{bottom: '15vh', right: 40}}
+      onClick={callback}
+    >
       <Tooltip overlay={overlay}>
         <i className="iconfont icon-icon-"></i>
       </Tooltip>
