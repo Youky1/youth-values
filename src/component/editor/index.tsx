@@ -57,7 +57,6 @@ export default function ({callback, initObj, clear, showDetail}: EditorConfig) {
       ddl ? {ddl} : {}
     );
     try {
-      console.log(obj);
       await callback(obj);
       if (clear) {
         setDdl(new Date());

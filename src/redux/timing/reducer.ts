@@ -20,7 +20,6 @@ export default function (state = defaultState, action: Action) {
     }
     case Con.ADD_EVENT: {
       newState.eventList.push({name: payload, record: []});
-      console.log('newState: ', newState);
       break;
     }
     case Con.SET_CURRENT_EVENT: {

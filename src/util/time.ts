@@ -12,9 +12,6 @@ const getTimeRange = () => {
 
 export const isBeforeNow = (time: Date) => {
   const d = moment(time);
-  if (time && d.isBefore(moment())) {
-    console.log(d.endOf('day'), moment().endOf('day'));
-  }
   return time && d.endOf('day').isBefore(moment().endOf('day'));
 };
 

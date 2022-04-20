@@ -11,7 +11,6 @@ export default function () {
   const currentEvent = useSelector(
     (state: RootState) => state.timing.currentEvent
   );
-  console.log('currentEvent: ', currentEvent);
   const [showAdd, setShowAdd] = useState(false);
   const isTiming = useSelector((state: RootState) => state.timing.isTiming);
   return (

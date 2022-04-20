@@ -38,7 +38,6 @@ export const setCurrentEventAction = (eventName: string) => {
       type: Con.SET_CURRENT_EVENT,
       payload: eventName,
     });
-    console.log('current event name: ', eventName);
   };
 };
 

@@ -48,10 +48,8 @@ export const updateTodoItem = async (target: ITodoItem) => {
 export const deleteTodoItem = async (target: number) => {
   try {
     const list = await getTodoList();
-    console.log('删除时获取的list：', list);
     for (let i = 0; i < list.length; i++) {
       if ((list[i].id = target)) {
-        console.log('删除成功');
         list.splice(i, 1);
         return setTodoList(list);
       }
