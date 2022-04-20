@@ -4,3 +4,4 @@ export const SET_CURRENT_EVENT = 'SET_CURRENT_EVENT';
 export const DELETE_EVENT = 'DELETE_EVENT';
 export const EDIT_EVENT = 'EDIT_EVENT';
 export const SET_IS_TIMING = 'SET_IS_TIMING';
+export const ADD_TIMING_RECORD = 'ADD_TIMING_RECORD';

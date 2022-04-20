@@ -8,9 +8,6 @@ import {useSelector} from 'react-redux';
 import {RootState} from '~/@types/store';
 export default function () {
   const eventList = useInitEventList();
-  const currentEvent = useSelector(
-    (state: RootState) => state.timing.currentEvent
-  );
   const [showAdd, setShowAdd] = useState(false);
   const isTiming = useSelector((state: RootState) => state.timing.isTiming);
   return (

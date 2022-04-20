@@ -49,3 +49,22 @@ export const editEvent = async (oldname: string, newName: string) => {
   list[i].name = newName;
   await setEventList(list);
 };
+
+// 添加计时记录
+export const addTimingRecord = async (
+  name: string,
+  start: Date,
+  end: Date,
+  length: number
+) => {
+  const eventList = await getEventList();
+  console.log('name is:', name);
+  for (let i = 0; i < eventList.length; i++) {
+    if (eventList[i].name === name) {
+      eventList[i].record.push({start, end, length});
+      console.log(eventList[i].record);
+      break;
+    }
+  }
+  await setEventList(eventList);
+};

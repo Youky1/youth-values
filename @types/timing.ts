@@ -10,6 +10,6 @@ export interface Event {
 export type EventList = Array<Event>;
 export interface defaultTimingState {
   eventList: EventList;
-  currentEvent: Event | null;
+  currentEvent: string;
   isTiming: boolean;
 }

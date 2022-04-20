@@ -1,6 +1,12 @@
 import * as Con from './constants';
 import type {Dispatch} from 'redux';
-import {addEvent, ensureEvent, deleteEvent, editEvent} from '@/api/timing';
+import {
+  addEvent,
+  ensureEvent,
+  deleteEvent,
+  editEvent,
+  addTimingRecord,
+} from '@/api/timing';
 import {failTip, successTip} from '~/src/util';
 import {EventList} from '~/@types/timing';
 
@@ -73,3 +79,22 @@ export const setIsTimingAction = (payload: boolean) => ({
   type: Con.SET_IS_TIMING,
   payload,
 });
+
+export const addRecordAction =
+  (name: string, start: Date, end: Date, length: number) =>
+  async (dispatch: Dispatch) => {
+    try {
+      await addTimingRecord(name, start, end, length);
+      dispatch({
+        type: Con.ADD_TIMING_RECORD,
+        payload: {
+          name,
+          start,
+          end,
+          length,
+        },
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };

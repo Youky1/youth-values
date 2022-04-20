@@ -6,7 +6,7 @@ import {getIndex} from '@/util';
 
 const defaultState: defaultTimingState = {
   eventList: [],
-  currentEvent: null,
+  currentEvent: '',
   isTiming: false,
 };
 
@@ -27,8 +27,8 @@ export default function (state = defaultState, action: Action) {
       break;
     }
     case Con.DELETE_EVENT: {
-      if (newState.currentEvent?.name === payload) {
-        newState.currentEvent = null;
+      if (newState.currentEvent === payload) {
+        newState.currentEvent = '';
       }
       const i = getIndex(newState.eventList, payload);
       newState.eventList.splice(i, 1);
@@ -42,6 +42,16 @@ export default function (state = defaultState, action: Action) {
     }
     case Con.SET_IS_TIMING: {
       newState.isTiming = payload;
+      break;
+    }
+    case Con.ADD_TIMING_RECORD: {
+      const {name, start, end, length} = payload;
+      for (let i = 0; i < newState.eventList.length; i++) {
+        if (newState.eventList[i].name === name) {
+          newState.eventList[i].record.push({start, end, length});
+          break;
+        }
+      }
       break;
     }
   }
