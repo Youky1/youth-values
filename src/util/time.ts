@@ -30,7 +30,9 @@ export const isThisMonth = (time: Date) => {
   return time && d.isSameOrBefore(monthEnd) && d.isSameOrAfter(monthStart);
 };
 
-export const formatTime = (time: Date) => moment(time).format('YY-MM-DD');
+export const formatDate = (time: Date) => moment(time).format('YY-MM-DD');
+
+export const formatTime = (time: Date) => moment(time).format('HH:mm:ss');
 
 export const sortList = (list: ITodoItems) => {
   const res: Array<NamedList> = [

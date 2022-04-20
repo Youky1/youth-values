@@ -11,4 +11,5 @@ export type EventList = Array<Event>;
 export interface defaultTimingState {
   eventList: EventList;
   currentEvent: Event | null;
+  isTiming: boolean;
 }

@@ -7,6 +7,7 @@ import {getIndex} from '@/util';
 const defaultState: defaultTimingState = {
   eventList: [],
   currentEvent: null,
+  isTiming: false,
 };
 
 export default function (state = defaultState, action: Action) {
@@ -38,6 +39,11 @@ export default function (state = defaultState, action: Action) {
       const {oldName, newName} = payload;
       const i = getIndex(newState.eventList, oldName);
       newState.eventList[i].name = newName;
+      break;
+    }
+    case Con.SET_IS_TIMING: {
+      newState.isTiming = payload;
+      break;
     }
   }
   return newState;

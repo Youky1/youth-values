@@ -4,7 +4,12 @@ import {Event} from '~/@types/timing';
 import {failTip, getCardColor} from '~/src/util';
 import {Modal, Tooltip, Input} from 'antd';
 import {useDispatch} from 'react-redux';
-import {deleteEventAction, editEventAction} from '@/redux/timing/actions';
+import {
+  deleteEventAction,
+  editEventAction,
+  setCurrentEventAction,
+  setIsTimingAction,
+} from '@/redux/timing/actions';
 
 export default function ({item}: {item: Event}) {
   const dispatch = useDispatch();
@@ -12,7 +17,10 @@ export default function ({item}: {item: Event}) {
   const [inputValue, setInputValue] = useState(item.name);
 
   // 开始计时
-  const handleTimingStart = () => {};
+  const handleTimingStart = () => {
+    dispatch(setCurrentEventAction(item.name));
+    dispatch(setIsTimingAction(true));
+  };
 
   // 编辑事件
   const handleEdit = () => {

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import s from './index.module.scss';
 import {ITodoItem} from '~/@types/todolist';
-import {formatTime} from '@/util/time';
+import {formatDate} from '@/util/time';
 import {
   toggleTodoItemAction,
   deleteTodoItemAction,
@@ -92,7 +92,7 @@ export default function Login({
       >
         {name}
       </span>
-      {ddl && <span className={s.itemDate}>{formatTime(ddl)}</span>}
+      {ddl && <span className={s.itemDate}>{formatDate(ddl)}</span>}
       <Modal
         title="确认要删除该事项吗？"
         visible={showModal}

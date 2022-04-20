@@ -13,6 +13,7 @@ export default function () {
   );
   console.log('currentEvent: ', currentEvent);
   const [showAdd, setShowAdd] = useState(false);
+  const isTiming = useSelector((state: RootState) => state.timing.isTiming);
   return (
     <div className={s.timing}>
       <main>
@@ -21,6 +22,7 @@ export default function () {
         ))}
       </main>
       <AddButton overlay="添加计时事件" callback={() => setShowAdd(true)} />
+      {isTiming && <Clock />}
     </div>
   );
 }

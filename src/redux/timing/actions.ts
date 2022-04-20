@@ -38,6 +38,7 @@ export const setCurrentEventAction = (eventName: string) => {
       type: Con.SET_CURRENT_EVENT,
       payload: eventName,
     });
+    console.log('current event name: ', eventName);
   };
 };
 
@@ -68,3 +69,8 @@ export const editEventAction =
       failTip(e);
     }
   };
+
+export const setIsTimingAction = (payload: boolean) => ({
+  type: Con.SET_IS_TIMING,
+  payload,
+});
