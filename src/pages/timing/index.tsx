@@ -9,6 +9,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '~/@types/store';
 import {Modal, Input, Tooltip, Drawer} from 'antd';
 import {addEventAction} from '@/redux/timing/actions';
+import EmptyView from '@/layout/emptyView';
+
 export default function () {
   const eventList = useInitEventList();
   const isTiming = useSelector((state: RootState) => state.timing.isTiming);
@@ -31,6 +33,7 @@ export default function () {
         {eventList.map(item => (
           <ItemCard key={item.name} item={item}></ItemCard>
         ))}
+        <EmptyView visiable={eventList.length === 0} />
       </main>
 
       {/* 计时器 */}

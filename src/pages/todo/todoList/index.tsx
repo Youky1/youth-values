@@ -14,6 +14,7 @@ import {
 import {useDispatch} from 'react-redux';
 import {successTip, failTip} from '@/util';
 import Title from '@/component/title';
+import EmptyView from '@/layout/emptyView';
 
 export default function TodoList() {
   const dispatch = useDispatch();
@@ -68,9 +69,7 @@ export default function TodoList() {
           </React.Fragment>
         ) : null
       )}
-      {todoList.every(i => i.list.length === 0) && (
-        <Empty className={s.empty} />
-      )}
+      <EmptyView visiable={todoList.every(i => i.list.length === 0)} />
       <Drawer
         title="新建事项"
         placement="right"
