@@ -2,12 +2,14 @@ import moment from 'moment';
 import {ITodoItems, ITodoItem} from '~/@types/todolist';
 import {NamedList} from '~/@types/store';
 
-const getTimeRange = () => {
+export const getTimeRange = () => {
   const weekStart = moment().isoWeekday(1).startOf('day'); //本周一
   const weekEnd = moment().isoWeekday(7).endOf('day'); //本周日
   const monthStart = moment().startOf('month').startOf('day');
   const monthEnd = moment().endOf('month').endOf('day');
-  return {weekStart, weekEnd, monthStart, monthEnd};
+  const yearStart = moment().startOf('year').startOf('day');
+  const yearEnd = moment().endOf('year').endOf('day');
+  return {weekStart, weekEnd, monthStart, monthEnd, yearStart, yearEnd};
 };
 
 export const isBeforeNow = (time: Date) => {

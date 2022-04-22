@@ -1,0 +1,8 @@
+.statistic {
+  min-height: $main-height;
+}
+.dateBox {
+  width: 100%;
+  height: 60px;
+  @include flex();
+}
