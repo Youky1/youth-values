@@ -7,5 +7,6 @@ export interface ITodoItem {
   description: string;
   id?: number;
   done: boolean;
+  doneDate?: Date;
 }
 export type ITodoItems = Array<ITodoItem>;

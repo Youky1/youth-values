@@ -3,6 +3,8 @@
   @include flex(flex-start);
   height: 80;
   margin: 10px 0;
+  padding-bottom: 4px;
+  border-bottom: 1px solid $border-color;
   .color {
     height: 50px;
     width: 10px;

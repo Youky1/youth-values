@@ -65,7 +65,11 @@ export const toggleTodoItem = async (target: number) => {
     const itemList = await getTodoList();
     for (const item of itemList) {
       if (item.id === target) {
-        return updateTodoItem({...item, done: !item.done});
+        return updateTodoItem({
+          ...item,
+          done: !item.done,
+          doneDate: item.done ? item.doneDate : new Date(),
+        });
       }
     }
     return Promise.reject(`没有找到ID: ${target}`);
