@@ -30,7 +30,7 @@ export const addTodoItemAction = (payload: ITodoItem) => ({
 });
 export const setTodoItemListAction = (payload: ITodoItems) => ({
   type: SET_TODO_LIST,
-  payload: payload.filter(item => !item.done),
+  payload: payload,
 });
 
 // 代办事项相关

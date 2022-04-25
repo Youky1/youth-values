@@ -8,16 +8,28 @@ import {getGroup} from '@/api/todolist';
 import {sortList} from '@/util';
 
 // 获取代办列表
-export const useInitTodoList = (sort?: boolean) => {
+export const useInitTodoList = ({
+  sort,
+  hideDone,
+}: {
+  sort: boolean;
+  hideDone: boolean;
+}) => {
   const dispatch = useDispatch();
   useEffect(() => {
     getTodoList()
-      .then(list => dispatch(setTodoItemListAction(list as ITodoItems)))
+      .then(res => {
+        const list = hideDone ? res.filter(item => !item.done) : res;
+        dispatch(setTodoItemListAction(list as ITodoItems));
+      })
       .catch(e => console.log(e));
   }, []);
-  return useSelector((state: RootState) =>
-    sort ? sortList(state.todolist.todolist) : state.todolist.todolist
-  );
+  return useSelector((state: RootState) => {
+    const temp = sort
+      ? sortList(state.todolist.todolist)
+      : state.todolist.todolist;
+    return temp;
+  });
 };
 
 // 获取代办事项分组

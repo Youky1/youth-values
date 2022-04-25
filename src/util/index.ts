@@ -1,6 +1,8 @@
 import {Event, EventList} from '~/@types/timing';
 export * from './message';
 export * from './time';
+export * from './charts';
+export * from './data';
 const colors = ['#99CCFF', '#3399CC', '#66CCCC', '#009999'];
 export function getCardColor(e: Event) {
   const len = e.record.reduce.length;

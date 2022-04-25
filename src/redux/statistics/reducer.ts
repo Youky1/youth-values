@@ -2,9 +2,10 @@ import {defaultStatisticState} from '~/@types/statistics';
 import {Action} from '~/@types/store';
 import {cloneDeep} from 'lodash';
 import Con from './constants';
+import moment from 'moment';
 
 const defaultState: defaultStatisticState = {
-  showingRange: '本周',
+  showingRange: [moment(), moment()],
   showingTodo: true,
   showingTiming: true,
 };

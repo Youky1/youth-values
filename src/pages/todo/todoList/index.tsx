@@ -20,7 +20,7 @@ import {NamedList} from '~/@types/store';
 export default function TodoList() {
   const dispatch = useDispatch();
   // 初始化待办事项列表，分为title和list
-  const todoList = useInitTodoList(true);
+  const todoList = useInitTodoList({sort: true, hideDone: true});
 
   // 搜索事项回调
   const handleInput = useCallback((v: string) => {

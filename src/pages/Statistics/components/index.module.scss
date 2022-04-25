@@ -1,0 +1,10 @@
+.chatPart {
+  padding: 20px 40px;
+}
+.chartContent {
+  height: 500px;
+  width: 40%;
+}
+.line {
+  @include flex(space-around);
+}

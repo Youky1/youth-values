@@ -74,3 +74,32 @@ export const timeFillter = (item: ITodoItem, target: string) => {
       return true;
   }
 };
+
+export const getRangeDays = (start: moment.Moment, end: moment.Moment) => {
+  const temp = moment(start);
+  const res = [temp.format('MM-DD')];
+  const len = end.diff(start, 'days');
+  for (let i = 0; i < len; i++) {
+    res.push(temp.add(1, 'd').format('MM-DD'));
+  }
+  return res;
+};
+
+export const getRangeMonths = (start: moment.Moment, end: moment.Moment) => {
+  const temp = moment(start);
+  const res = [temp.format('YYYY-MMM')];
+  const len = end.diff(start, 'months');
+  for (let i = 0; i < len; i++) {
+    res.push(temp.add(1, 'months').format('YYYY-MMM'));
+  }
+  return res;
+};
+
+export const isInRange = (
+  start: moment.Moment,
+  end: moment.Moment,
+  value: Date
+) => {
+  const d = moment(value);
+  return d.isSameOrBefore(end) && d.isSameOrAfter(start);
+};

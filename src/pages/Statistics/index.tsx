@@ -28,7 +28,6 @@ export default function () {
 
   // 选择的时间范围
   const handleRangeChange = (dates: RangePickerValue) => {
-    console.log(dates);
     dispatch(changeShowingRangeAction(dates));
   };
 
