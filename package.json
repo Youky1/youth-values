@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview",
+    "build": "tsc && vite build && sh deploy.sh",
+    "preview": "vite preview --port 3000",
     "lint": "gts lint",
     "clean": "gts clean",
     "compile": "tsc",
