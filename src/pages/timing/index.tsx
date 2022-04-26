@@ -12,7 +12,7 @@ import {addEventAction} from '@/redux/timing/actions';
 import EmptyView from '@/layout/emptyView';
 
 export default function () {
-  const eventList = useInitEventList();
+  const eventList = useInitEventList(true);
   const isTiming = useSelector((state: RootState) => state.timing.isTiming);
 
   const [showAdd, setShowAdd] = useState(false);

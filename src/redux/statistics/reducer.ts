@@ -5,7 +5,7 @@ import Con from './constants';
 import moment from 'moment';
 
 const defaultState: defaultStatisticState = {
-  showingRange: [moment(), moment()],
+  showingRange: [moment().startOf('day'), moment().endOf('day')],
   showingTodo: true,
   showingTiming: true,
 };

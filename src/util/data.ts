@@ -1,6 +1,7 @@
 /****************处理表格所需数据的封装方法****************/
+import {cloneDeep} from 'lodash';
 import moment from 'moment';
-import {validRangePickerValue} from '~/@types/statistics';
+import {RecordsByName, validRangePickerValue} from '~/@types/statistics';
 import {ITodoItems} from '~/@types/todolist';
 import {getRangeDays, getRangeMonths} from './time';
 
@@ -14,6 +15,7 @@ export const getDateList = (range: validRangePickerValue) => {
   }
 };
 
+// 将数据处理为每日数据的形式
 export const todoDataFillterDays = (
   list: ITodoItems,
   abscissa: Array<string>,
@@ -33,6 +35,7 @@ export const todoDataFillterDays = (
   return res;
 };
 
+// 将数据处理为每月数据的形式
 export const todoDataFillterMonths = (
   list: ITodoItems,
   abscissa: Array<string>,
@@ -50,4 +53,23 @@ export const todoDataFillterMonths = (
     }
   });
   return res;
+};
+
+// 将计时任务按时长/次数排序
+export const sortTimingData = (
+  records: RecordsByName,
+  type: 'times' | 'duration'
+) => {
+  const colors = ['#823835', '#8ABEB2', '#C9BAAA', '#DDD38C', '#DE9C52'];
+  const arr = cloneDeep(records)
+    .sort((pre, next) => next[type] - pre[type])
+    .slice(0, 5)
+    .filter(item => item[type] !== 0);
+  return {
+    xData: arr.map(item => item.name),
+    yData: arr.map((item, index) => ({
+      value: item[type],
+      itemStyle: {color: colors[index]},
+    })),
+  };
 };

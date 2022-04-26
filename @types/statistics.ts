@@ -15,3 +15,9 @@ export interface PieChart {
     name: string;
   }>;
 }
+interface RecordsByNameItem {
+  name: string;
+  duration: number;
+  times: number;
+}
+export type RecordsByName = Array<RecordsByNameItem>;

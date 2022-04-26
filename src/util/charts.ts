@@ -1,5 +1,6 @@
 import {init} from 'echarts';
 import {PieChart} from '~/@types/statistics';
+import {merge} from 'lodash';
 
 /****************创建表格的封装方法****************/
 export const $ = (id: string) =>
@@ -11,37 +12,85 @@ export const createChart = (
   xData: Array<string>,
   yData: Array<number> | any,
   domId: string,
-  type: string
+  type: string,
+  config?: any
 ) => {
-  const option = {
-    tooltip: {
-      trigger: 'axis',
-      axisPointer: {
-        type: 'shadow',
-      },
-    },
-    xAxis: {
-      type: 'category',
-      data: xData,
-    },
-    yAxis: {
-      type: 'value',
-    },
-    series: [
-      {
-        data: yData,
-        type,
-        backgroundStyle: {
-          color: 'rgba(180, 180, 180, 0.2)',
+  const option = merge(
+    {
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'shadow',
         },
       },
-    ],
-    title: {
-      x: 'center',
-      y: 'bottom',
-      text: title,
+      xAxis: {
+        type: 'category',
+        data: xData,
+      },
+      yAxis: {
+        type: 'value',
+      },
+      series: [
+        {
+          data: yData,
+          type,
+          backgroundStyle: {
+            color: 'rgba(180, 180, 180, 0.2)',
+          },
+        },
+      ],
+      title: {
+        x: 'center',
+        y: 'bottom',
+        text: title,
+      },
     },
-  };
+    config
+  );
+  init($(domId)).setOption(option);
+};
+
+// 创建水平方向的 折线图/柱状图 方法
+export const createChartHorizontal = (
+  title: string,
+  xData: Array<number> | any,
+  yData: Array<string>,
+  domId: string,
+  type: string,
+  config?: any
+) => {
+  const option = merge(
+    {
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'shadow',
+        },
+      },
+      xAxis: {
+        type: 'value',
+      },
+      yAxis: {
+        type: 'category',
+        data: yData,
+      },
+      series: [
+        {
+          data: xData,
+          type,
+          backgroundStyle: {
+            color: 'rgba(180, 180, 180, 0.2)',
+          },
+        },
+      ],
+      title: {
+        x: 'center',
+        y: 'bottom',
+        text: title,
+      },
+    },
+    config
+  );
   init($(domId)).setOption(option);
 };
 
