@@ -11,7 +11,6 @@ export const setUserInfo = async (info: UserInfo) =>
 export const login = async (id: string, password: string) => {
   try {
     const res = await instance.get('/user/login', {params: {id, password}});
-    console.log('login: ', res);
     await setUserInfo({id, password});
     return Promise.resolve(res);
   } catch (e) {
@@ -24,7 +23,8 @@ export const autoLogin = async () => {
   const userInfo = await getUserInfo();
   if (userInfo) {
     const {id, password} = userInfo;
-    return login(id, password);
+    await login(id, password);
+    return Promise.resolve({id, password});
   } else {
     return Promise.reject();
   }

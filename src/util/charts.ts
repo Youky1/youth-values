@@ -122,3 +122,28 @@ export const createPieChart = ({title, domId, data}: PieChart) => {
   };
   init($(domId)).setOption(option);
 };
+
+export const createHeatMap = () => {
+  const option = {
+    visualMap: {
+      min: 0,
+      max: 10000,
+      type: 'piecewise',
+      orient: 'horizontal',
+      left: 'center',
+      top: 65,
+    },
+    calendar: {
+      top: 120,
+      left: 30,
+      right: 30,
+      cellSize: ['auto', 13],
+      range: '2016',
+    },
+    series: {
+      type: 'heatmap',
+      coordinateSystem: 'calendar',
+      data: getVirtulData('2016'),
+    },
+  };
+};
