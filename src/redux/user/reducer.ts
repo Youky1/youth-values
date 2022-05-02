@@ -17,6 +17,15 @@ export default (state = defaultState, action: Action) => {
       newState.password = payload.password;
       break;
     }
+    case Con.CHANGE_PASSWORD: {
+      newState.password = payload;
+      break;
+    }
+    case Con.REMOVE_USER: {
+      newState.id = '';
+      newState.password = '';
+      break;
+    }
   }
   return newState;
 };

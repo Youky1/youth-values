@@ -1,0 +1,15 @@
+.userPage {
+  @include flex(flex-start, center, column);
+  padding-top: 40px;
+  .name {
+    font-size: 30px;
+    i {
+      font-size: 30px;
+      margin-right: 4px;
+    }
+  }
+  .btnLine {
+    width: 400px;
+    @include flex(space-around);
+  }
+}

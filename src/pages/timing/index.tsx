@@ -56,7 +56,7 @@ export default function () {
 
       {/* 新建事件 */}
       <Modal
-        title="新建计时事件"
+        title="计时事件"
         visible={showAdd}
         onCancel={() => setShowAdd(false)}
         onOk={handleAdd}

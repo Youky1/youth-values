@@ -5,7 +5,7 @@ import instance from '../base';
 
 export const getUserInfo = async () =>
   (await localforage.getItem('userInfo')) as UserInfo;
-export const setUserInfo = async (info: UserInfo) =>
+export const setUserInfo = async (info: UserInfo | null) =>
   await localforage.setItem('userInfo', info);
 
 export const login = async (id: string, password: string) => {
@@ -41,5 +41,33 @@ export const signup = async (id: string, password: string) => {
   } catch (e) {
     console.log(e);
     return Promise.reject(e);
+  }
+};
+
+export const signOut = async () => {
+  await setUserInfo(null);
+  window.location.reload();
+};
+
+export const changePassword = async (newPwd: string) => {
+  const {id, password} = await getUserInfo();
+  await instance.post('/user/update', {
+    id,
+    password,
+    newPassword: newPwd,
+  });
+  await setUserInfo({id, password: newPwd});
+};
+
+export const removeUser = async () => {
+  try {
+    const {id, password} = await getUserInfo();
+    await instance.post('/user/remove', {
+      id,
+      password,
+    });
+    await signOut();
+  } catch (e) {
+    console.log(e);
   }
 };

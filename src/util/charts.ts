@@ -123,27 +123,34 @@ export const createPieChart = ({title, domId, data}: PieChart) => {
   init($(domId)).setOption(option);
 };
 
-export const createHeatMap = () => {
+export const createHeatMap = (domId: string, data: Array<[string, number]>) => {
   const option = {
     visualMap: {
       min: 0,
-      max: 10000,
+      max: 10,
       type: 'piecewise',
       orient: 'horizontal',
       left: 'center',
       top: 65,
+      pieces: [
+        {lte: 1, color: '#EBEDF0'},
+        {lte: 3, gt: 1, color: '#9BE9A8'},
+        {lte: 6, gt: 3, color: '#40C463'},
+        {gt: 6, color: '#216E39'},
+      ],
     },
     calendar: {
       top: 120,
       left: 30,
       right: 30,
       cellSize: ['auto', 13],
-      range: '2016',
+      range: '2022',
     },
     series: {
       type: 'heatmap',
       coordinateSystem: 'calendar',
-      data: getVirtulData('2016'),
+      data,
     },
   };
+  init($(domId)).setOption(option);
 };

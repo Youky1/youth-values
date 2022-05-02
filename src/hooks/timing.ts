@@ -47,7 +47,7 @@ export const useTimingRecordByName = (
 // 获取时间范围内每天的工作时长（单位为秒）
 export const useTimingRecordByDate = (
   abscissa: string[],
-  type: 'MM-DD' | 'YYYY-MMM'
+  type: 'MM-DD' | 'YYYY-MMM' | 'YYYY-MM-DD'
 ) => {
   const list = useInitEventList(false);
   const timesList: number[] = Array(abscissa.length).fill(0);

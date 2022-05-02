@@ -103,3 +103,13 @@ export const isInRange = (
   const d = moment(value);
   return d.isSameOrBefore(end) && d.isSameOrAfter(start);
 };
+
+export const getDateListOfYear = () => {
+  const {yearStart, yearEnd} = getTimeRange();
+  const res = [yearStart.format('YYYY-MM-DD')];
+  const len = yearEnd.diff(yearStart, 'days');
+  for (let i = 0; i < len; i++) {
+    res.push(yearStart.add(1, 'd').format('YYYY-MM-DD'));
+  }
+  return res;
+};

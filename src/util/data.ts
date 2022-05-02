@@ -3,7 +3,7 @@ import {cloneDeep} from 'lodash';
 import moment from 'moment';
 import {RecordsByName, validRangePickerValue} from '~/@types/statistics';
 import {ITodoItems} from '~/@types/todolist';
-import {getRangeDays, getRangeMonths} from './time';
+import {getDateListOfYear, getRangeDays, getRangeMonths} from './time';
 
 // 获取横轴日期数据
 export const getDateList = (range: validRangePickerValue) => {
