@@ -11,6 +11,7 @@ export const setUserInfo = async (info: UserInfo | null) =>
 export const login = async (id: string, password: string) => {
   try {
     const res = await instance.get('/user/login', {params: {id, password}});
+    console.log('res', res);
     await setUserInfo({id, password});
     return Promise.resolve(res);
   } catch (e) {

@@ -13,7 +13,9 @@ export const useAutoLogin = (from: string) => {
   useEffect(() => {
     autoLogin()
       .then(res => {
+        console.log('res : ', res);
         dispatch(setUserInfoAction(res));
+        console.log('id: ', res.id);
       })
       .catch(() => {
         console.log('自动登录失败');

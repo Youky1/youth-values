@@ -48,7 +48,7 @@ instance.interceptors.response.use(
   response => {
     hideLoading();
     if (response.data.status) {
-      return Promise.resolve(response.data);
+      return Promise.resolve(response.data.data);
     } else {
       return Promise.reject(response.data.msg);
     }

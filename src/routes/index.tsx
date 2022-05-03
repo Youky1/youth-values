@@ -5,6 +5,7 @@ import Timing from '@/pages/timing';
 import Statistics from '@/pages/Statistics';
 import User from '@/pages/user';
 import Login from '@/pages/login';
+import Group from '@/pages/group';
 export default function renderRoutes() {
   return (
     <Routes>
@@ -14,6 +15,7 @@ export default function renderRoutes() {
       <Route path="/statistics" element={<Statistics />} />
       <Route path="/user" element={<User />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/group" element={<Group />} />
     </Routes>
   );
 }
