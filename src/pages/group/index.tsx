@@ -4,7 +4,11 @@ import {getGroupList, addGroup} from '@/api/group';
 import {GroupItem} from '~/@types/group';
 import {useAutoLogin} from '@/hooks/user';
 import Title from '@/component/title';
-import {Table, Button, Tag} from 'antd';
+import {Table, Button, Tag, Drawer, Input} from 'antd';
+import AddButton from '~/src/component/addButton';
+import {failTip, successTip} from '~/src/util';
+
+const {TextArea} = Input;
 
 export default function Group() {
   const {id} = useAutoLogin('group');
@@ -12,8 +16,7 @@ export default function Group() {
   const [myGroups, setMyGroups] = useState<GroupItem[]>();
   const [joinedGroup, setJoinedGroup] = useState<GroupItem[]>();
   const [groups, setGroups] = useState<GroupItem[]>();
-  console.log(groups);
-  useEffect(() => {
+  const freshData = () => {
     getGroupList()
       .then(res => {
         const mine = [];
@@ -33,6 +36,9 @@ export default function Group() {
         setGroups(notMine);
       })
       .catch(e => console.log('err: ', e));
+  };
+  useEffect(() => {
+    freshData();
   }, [id]);
 
   const handleChangeDescription = (description: string) => {
@@ -120,22 +126,70 @@ export default function Group() {
     },
   ];
 
+  const [isAdding, setIsAdding] = useState(false);
+  const [newId, setNewId] = useState('');
+  const [newDescription, setNewDescription] = useState('');
+  const handleAddGroup = async () => {
+    if (!newId || !newDescription) {
+      failTip('小组名或描述不能为空');
+      return;
+    }
+    try {
+      await addGroup({id: newId, description: newDescription, owner: id});
+      setIsAdding(false);
+      successTip('添加成功');
+      await freshData();
+    } catch (e) {
+      failTip(e);
+    }
+  };
+
   return (
     <div className={s.container}>
       <Title>我的小组</Title>
       <Table dataSource={myGroups} columns={myColumns} pagination={false} />
-
       <Title>我加入的小组</Title>
       <Table
         dataSource={joinedGroup}
         columns={joinedColumns}
         pagination={false}
       />
-
       <Title>其他小组</Title>
       <Table dataSource={groups} columns={otherColumns} pagination={false} />
-
       {/* 创建小组 */}
+      <AddButton overlay="新建小组" callback={() => setIsAdding(true)} />
+      <Drawer
+        visible={isAdding}
+        title="创建小组"
+        onClose={() => setIsAdding(false)}
+        width={640}
+      >
+        <div className="lineContainer">
+          <span>小组名称</span>
+          <Input value={newId} onChange={e => setNewId(e.target.value)} />
+        </div>
+        <div className="lineContainer" style={{height: 'auto', padding: 20}}>
+          <span>小组描述</span>
+          <TextArea
+            rows={4}
+            value={newDescription}
+            onChange={e => setNewDescription(e.target.value)}
+          ></TextArea>
+        </div>
+        <Button
+          onClick={handleAddGroup}
+          size="large"
+          type="primary"
+          shape="round"
+          style={{
+            marginTop: 40,
+            marginLeft: '50%',
+            transform: 'translateX(-50%)',
+          }}
+        >
+          确定添加
+        </Button>
+      </Drawer>
     </div>
   );
 }
