@@ -1,7 +1,7 @@
 import React, {useRef, useState} from 'react';
 import columns from '@/constants/constants';
 import {Button, Modal, Table, Input} from 'antd';
-import {removeGroup, updateDescription} from '@/api/group';
+import {removeGroup, updateDescription, addUser} from '@/api/group';
 import {successTip, failTip} from '@/util';
 import Title from '@/component/title';
 import {GroupItem} from '~/@types/group';
@@ -13,11 +13,11 @@ export default function Mine({
   refreshData: Function;
   myGroups: GroupItem[] | undefined;
 }) {
-  const [isUpdate, setIsUpdate] = useState(false);
-  const [newDescription, setNewDescription] = useState('');
   const currentId = useRef('');
 
   // 修改小组描述
+  const [isUpdate, setIsUpdate] = useState(false);
+  const [newDescription, setNewDescription] = useState('');
   const handleChangeDescription = (id: string, description: string) => {
     setIsUpdate(true);
     setNewDescription(description);
@@ -54,6 +54,24 @@ export default function Mine({
     });
   };
 
+  // 添加组员
+  const [newUserId, setNewUserId] = useState('');
+  const [isAdding, setIsAdding] = useState(false);
+  const handleAddUser = async () => {
+    if (!newUserId) {
+      failTip('新成员ID不能为空');
+      return;
+    }
+    try {
+      await addUser(currentId.current, newUserId);
+      await refreshData();
+      successTip('邀请成功');
+    } catch (e) {
+      failTip(e);
+    }
+    setIsAdding(false);
+  };
+
   const myColumns = [
     ...columns,
     {
@@ -79,7 +97,14 @@ export default function Mine({
           >
             解散小组
           </Button>
-          <Button type="primary" shape="round">
+          <Button
+            type="primary"
+            shape="round"
+            onClick={() => {
+              setIsAdding(true);
+              currentId.current = id;
+            }}
+          >
             邀请成员
           </Button>
         </>
@@ -101,6 +126,14 @@ export default function Mine({
           value={newDescription}
           onChange={e => setNewDescription(e.target.value)}
         />
+      </Modal>
+      <Modal
+        title="添加组员"
+        visible={isAdding}
+        onCancel={() => setIsAdding(false)}
+        onOk={handleAddUser}
+      >
+        <Input value={newUserId} onChange={e => setNewUserId(e.target.value)} />
       </Modal>
     </>
   );

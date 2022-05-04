@@ -15,3 +15,6 @@ export const removeGroup = async (id: string) =>
 
 export const updateDescription = async (id: string, description: string) =>
   await instance.post('/group/update', {id, description});
+
+export const addUser = async (id: string, userId: string) =>
+  await instance.post('/group/join', {id, userId});
