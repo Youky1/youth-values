@@ -41,7 +41,7 @@ export default function Group() {
   return (
     <div className={s.container}>
       <Mine refreshData={refreshData} myGroups={myGroups} />
-      <Joined refreshData={refreshData} joinedGroup={joinedGroup} />
+      <Joined refreshData={refreshData} joinedGroup={joinedGroup} userId={id} />
       <Other refreshData={refreshData} otherGroup={groups} userId={id} />
       <AddGroup id={id} refreshData={refreshData} />
     </div>

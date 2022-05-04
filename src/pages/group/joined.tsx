@@ -1,15 +1,34 @@
 import React from 'react';
 import columns from '@/constants/constants';
-import {Button, Table} from 'antd';
+import {Button, Table, Modal} from 'antd';
 import Title from '@/component/title';
 import {GroupItem} from '~/@types/group';
+import {quitGroup} from '@/api/group';
+import {failTip, successTip} from '~/src/util';
 export default function Joined({
+  userId,
   refreshData,
   joinedGroup,
 }: {
+  userId: string;
   refreshData: Function;
   joinedGroup: GroupItem[] | undefined;
 }) {
+  const handleQuit = (id: string) => {
+    Modal.confirm({
+      title: '确认要退出吗',
+      async onOk() {
+        try {
+          await quitGroup(id, userId);
+          await refreshData();
+          successTip('退出成功');
+        } catch (e) {
+          console.log(e);
+          failTip(e);
+        }
+      },
+    });
+  };
   const joinedColumns = [
     ...columns,
     {
@@ -18,8 +37,9 @@ export default function Joined({
     },
     {
       title: '操作',
-      render: () => (
-        <Button type="primary" shape="round">
+      dataIndex: 'id',
+      render: (id: string) => (
+        <Button type="primary" shape="round" onClick={() => handleQuit(id)}>
           退出小组
         </Button>
       ),

@@ -18,3 +18,6 @@ export const updateDescription = async (id: string, description: string) =>
 
 export const addUser = async (id: string, userId: string) =>
   await instance.post('/group/join', {id, userId});
+
+export const quitGroup = async (id: string, userId: string) =>
+  await instance.post('/group/quit', {id, userId});
