@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {useRef, useState} from 'react';
 import columns from '@/constants/constants';
-import {Button, Modal, Table} from 'antd';
-import {removeGroup} from '@/api/group';
+import {Button, Modal, Table, Input} from 'antd';
+import {removeGroup, updateDescription} from '@/api/group';
 import {successTip, failTip} from '@/util';
 import Title from '@/component/title';
 import {GroupItem} from '~/@types/group';
@@ -13,9 +13,29 @@ export default function Mine({
   refreshData: Function;
   myGroups: GroupItem[] | undefined;
 }) {
+  const [isUpdate, setIsUpdate] = useState(false);
+  const [newDescription, setNewDescription] = useState('');
+  const currentId = useRef('');
+
   // 修改小组描述
-  const handleChangeDescription = (description: string) => {
-    alert(description);
+  const handleChangeDescription = (id: string, description: string) => {
+    setIsUpdate(true);
+    setNewDescription(description);
+    currentId.current = id;
+  };
+  const emitUpdateDescription = async () => {
+    if (!newDescription) {
+      failTip('小组描述不能为空');
+      return;
+    }
+    try {
+      await updateDescription(currentId.current, newDescription);
+      await refreshData();
+      successTip('修改成功');
+    } catch (e) {
+      failTip(e);
+    }
+    setIsUpdate(false);
   };
 
   // 删除小组
@@ -33,14 +53,15 @@ export default function Mine({
       },
     });
   };
+
   const myColumns = [
     ...columns,
     {
       title: '小组描述',
       dataIndex: 'description',
       key: 'id',
-      render: (description: string) => (
-        <a onClick={() => handleChangeDescription(description)}>
+      render: (description: string, record: GroupItem) => (
+        <a onClick={() => handleChangeDescription(record.id, description)}>
           {description}
         </a>
       ),
@@ -70,6 +91,17 @@ export default function Mine({
     <>
       <Title>我的小组</Title>
       <Table dataSource={myGroups} columns={myColumns} pagination={false} />
+      <Modal
+        title="修改描述"
+        visible={isUpdate}
+        onCancel={() => setIsUpdate(false)}
+        onOk={emitUpdateDescription}
+      >
+        <Input
+          value={newDescription}
+          onChange={e => setNewDescription(e.target.value)}
+        />
+      </Modal>
     </>
   );
 }
