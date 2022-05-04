@@ -1,14 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import s from './index.module.scss';
-import {getGroupList, addGroup} from '@/api/group';
+import {getGroupList, addGroup, removeGroup} from '@/api/group';
 import {GroupItem} from '~/@types/group';
 import {useAutoLogin} from '@/hooks/user';
 import Title from '@/component/title';
-import {Table, Button, Tag, Drawer, Input} from 'antd';
+import {Table, Button, Tag, Drawer, Input, Modal} from 'antd';
 import AddButton from '~/src/component/addButton';
 import {failTip, successTip} from '~/src/util';
 
 const {TextArea} = Input;
+const {confirm} = Modal;
 
 export default function Group() {
   const {id} = useAutoLogin('group');
@@ -16,7 +17,7 @@ export default function Group() {
   const [myGroups, setMyGroups] = useState<GroupItem[]>();
   const [joinedGroup, setJoinedGroup] = useState<GroupItem[]>();
   const [groups, setGroups] = useState<GroupItem[]>();
-  const freshData = () => {
+  const refreshData = () => {
     getGroupList()
       .then(res => {
         const mine = [];
@@ -38,11 +39,28 @@ export default function Group() {
       .catch(e => console.log('err: ', e));
   };
   useEffect(() => {
-    freshData();
+    refreshData();
   }, [id]);
 
+  // 修改小组描述
   const handleChangeDescription = (description: string) => {
     alert(description);
+  };
+
+  // 删除小组
+  const handleRemoveGroup = (id: string) => {
+    confirm({
+      title: '确认要删除吗',
+      async onOk() {
+        try {
+          await removeGroup(id);
+          successTip('解散成功');
+          await refreshData();
+        } catch (e) {
+          failTip(e);
+        }
+      },
+    });
   };
 
   const columns = [
@@ -89,9 +107,15 @@ export default function Group() {
     ...columns,
     {
       title: '操作',
-      render: () => (
+      dataIndex: 'id',
+      render: (id: string) => (
         <>
-          <Button type="primary" shape="round" style={{marginRight: 20}}>
+          <Button
+            type="primary"
+            shape="round"
+            style={{marginRight: 20}}
+            onClick={() => handleRemoveGroup(id)}
+          >
             解散小组
           </Button>
           <Button type="primary" shape="round">
@@ -138,7 +162,7 @@ export default function Group() {
       await addGroup({id: newId, description: newDescription, owner: id});
       setIsAdding(false);
       successTip('添加成功');
-      await freshData();
+      await refreshData();
     } catch (e) {
       failTip(e);
     }

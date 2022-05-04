@@ -9,3 +9,6 @@ export const addGroup = async (info: {
   description: string;
   owner: string;
 }) => await instance.post('/group/create', info);
+
+export const removeGroup = async (id: string) =>
+  await instance.post('/group/remove', {id});
