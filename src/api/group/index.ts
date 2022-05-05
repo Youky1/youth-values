@@ -1,6 +1,8 @@
 import instance from '../base';
 import {GroupItem} from '~/@types/group';
 
+export * from './task';
+
 export const getGroupList = async () =>
   (await instance.get('/group/all')) as GroupItem[];
 

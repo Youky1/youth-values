@@ -1,10 +1,16 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import columns from '@/constants/constants';
-import {Button, Modal, Table, Input} from 'antd';
-import {removeGroup, updateDescription, addUser} from '@/api/group';
+import {Button, Modal, Table, Input, Drawer} from 'antd';
+import {
+  removeGroup,
+  updateDescription,
+  addUser,
+  queryTaskByGroup,
+  addTask,
+} from '@/api/group';
 import {successTip, failTip} from '@/util';
 import Title from '@/component/title';
-import {GroupItem} from '~/@types/group';
+import {GroupItem, Task} from '~/@types/group';
 
 export default function Mine({
   refreshData,
@@ -72,6 +78,33 @@ export default function Mine({
     setIsAdding(false);
   };
 
+  // 小组任务
+  const [showTask, setShowTask] = useState(false);
+  const [task, setTask] = useState<Task[]>([]);
+  useEffect(() => {
+    if (showTask) {
+      queryTaskByGroup(currentId.current)
+        .then(res => {
+          console.log('tasks: ', res);
+          setTask(res);
+        })
+        .then(e => console.log(e));
+    }
+  }, [showTask]);
+
+  // 新建任务
+  const [newTask, setNewTask] = useState('');
+  const handleAddTask = async (e: any) => {
+    try {
+      const {value} = e.target;
+      await addTask(currentId.current, value);
+      successTip('添加成功');
+    } catch (e) {
+      failTip('添加失败: ' + e);
+      console.log(e);
+    }
+  };
+
   const myColumns = [
     ...columns,
     {
@@ -100,6 +133,7 @@ export default function Mine({
           <Button
             type="primary"
             shape="round"
+            style={{marginRight: 20}}
             onClick={() => {
               setIsAdding(true);
               currentId.current = id;
@@ -107,15 +141,45 @@ export default function Mine({
           >
             邀请成员
           </Button>
+          <Button
+            type="primary"
+            shape="round"
+            onClick={() => {
+              setShowTask(true);
+              currentId.current = id;
+            }}
+          >
+            小组任务
+          </Button>
         </>
       ),
     },
+  ];
+
+  // 完成任务
+  const handleComplete = (id: string) => {
+    alert(id + currentId.current);
+  };
+
+  const taskColumns = [
+    {
+      title: '任务名',
+      dataIndex: 'taskId',
+      render: (taskId: string) => (
+        <Button type="text" onClick={() => handleComplete(taskId)}>
+          {taskId}
+        </Button>
+      ),
+    },
+    {title: '发布日期', dataIndex: 'createDate'},
+    {title: '已完成人数', dataIndex: 'completed'},
   ];
 
   return (
     <>
       <Title>我的小组</Title>
       <Table dataSource={myGroups} columns={myColumns} pagination={false} />
+
       <Modal
         title="修改描述"
         visible={isUpdate}
@@ -127,6 +191,7 @@ export default function Mine({
           onChange={e => setNewDescription(e.target.value)}
         />
       </Modal>
+
       <Modal
         title="添加组员"
         visible={isAdding}
@@ -135,6 +200,24 @@ export default function Mine({
       >
         <Input value={newUserId} onChange={e => setNewUserId(e.target.value)} />
       </Modal>
+
+      <Drawer
+        title="小组任务"
+        visible={showTask}
+        onClose={() => setShowTask(false)}
+        width={640}
+      >
+        <div className="lineContainer">
+          <p>新建任务</p>
+          <Input
+            placeholder="按回车添加"
+            value={newTask}
+            onChange={e => setNewTask(e.target.value)}
+            onPressEnter={handleAddTask}
+          />
+        </div>
+        <Table dataSource={task} columns={taskColumns} pagination={false} />
+      </Drawer>
     </>
   );
 }

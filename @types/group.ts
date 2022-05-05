@@ -5,3 +5,9 @@ export interface GroupItem {
   users: string[];
   createDate: string;
 }
+export interface Task {
+  taskId: string;
+  groupId: string;
+  createDate: string;
+  completed: number;
+}
