@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import columns from '@/constants/constants';
-import {Button, Table, Modal} from 'antd';
+import {Button, Table, Modal, Drawer} from 'antd';
 import Title from '@/component/title';
-import {GroupItem} from '~/@types/group';
-import {quitGroup} from '@/api/group';
+import {GroupItem, Task} from '~/@types/group';
+import {queryTaskByGroup, quitGroup} from '@/api/group';
 import {failTip, successTip} from '~/src/util';
+import Tasks from './tasks';
 export default function Joined({
   userId,
   refreshData,
@@ -29,6 +30,20 @@ export default function Joined({
       },
     });
   };
+
+  const [showTask, setShowTask] = useState(false);
+  const [task, setTask] = useState<Task[]>([]);
+  const currentId = useRef('');
+  const refreshTask = async () => {
+    const res = await queryTaskByGroup(currentId.current);
+    setTask(res);
+  };
+  useEffect(() => {
+    if (showTask) {
+      refreshTask();
+    }
+  }, [showTask]);
+
   const joinedColumns = [
     ...columns,
     {
@@ -39,9 +54,21 @@ export default function Joined({
       title: '操作',
       dataIndex: 'id',
       render: (id: string) => (
-        <Button type="primary" shape="round" onClick={() => handleQuit(id)}>
-          退出小组
-        </Button>
+        <>
+          <Button type="primary" shape="round" onClick={() => handleQuit(id)}>
+            退出小组
+          </Button>
+          <Button
+            type="primary"
+            shape="round"
+            onClick={() => {
+              setShowTask(true);
+              currentId.current = id;
+            }}
+          >
+            小组任务
+          </Button>
+        </>
       ),
     },
   ];
@@ -53,6 +80,18 @@ export default function Joined({
         columns={joinedColumns}
         pagination={false}
       />
+      <Drawer
+        title="小组任务"
+        visible={showTask}
+        onClose={() => setShowTask(false)}
+        width={640}
+      >
+        <Tasks
+          groupId={currentId.current}
+          task={task}
+          refreshTask={refreshTask}
+        />
+      </Drawer>
     </>
   );
 }

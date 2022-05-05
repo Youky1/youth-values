@@ -11,6 +11,7 @@ import {
 import {successTip, failTip} from '@/util';
 import Title from '@/component/title';
 import {GroupItem, Task} from '~/@types/group';
+import Tasks from './tasks';
 
 export default function Mine({
   refreshData,
@@ -81,14 +82,13 @@ export default function Mine({
   // 小组任务
   const [showTask, setShowTask] = useState(false);
   const [task, setTask] = useState<Task[]>([]);
+  const refreshTask = async () => {
+    const res = await queryTaskByGroup(currentId.current);
+    setTask(res);
+  };
   useEffect(() => {
     if (showTask) {
-      queryTaskByGroup(currentId.current)
-        .then(res => {
-          console.log('tasks: ', res);
-          setTask(res);
-        })
-        .then(e => console.log(e));
+      refreshTask();
     }
   }, [showTask]);
 
@@ -156,25 +156,6 @@ export default function Mine({
     },
   ];
 
-  // 完成任务
-  const handleComplete = (id: string) => {
-    alert(id + currentId.current);
-  };
-
-  const taskColumns = [
-    {
-      title: '任务名',
-      dataIndex: 'taskId',
-      render: (taskId: string) => (
-        <Button type="text" onClick={() => handleComplete(taskId)}>
-          {taskId}
-        </Button>
-      ),
-    },
-    {title: '发布日期', dataIndex: 'createDate'},
-    {title: '已完成人数', dataIndex: 'completed'},
-  ];
-
   return (
     <>
       <Title>我的小组</Title>
@@ -216,7 +197,11 @@ export default function Mine({
             onPressEnter={handleAddTask}
           />
         </div>
-        <Table dataSource={task} columns={taskColumns} pagination={false} />
+        <Tasks
+          groupId={currentId.current}
+          task={task}
+          refreshTask={refreshTask}
+        />
       </Drawer>
     </>
   );

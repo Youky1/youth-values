@@ -5,3 +5,6 @@ export const queryTaskByGroup = async (id: string) =>
 
 export const addTask = async (groupId: string, taskId: string) =>
   await instance.post('/task/add', {groupId, taskId});
+
+export const finishTask = async (groupId: string, taskId: string) =>
+  await instance.post('/task/finish', {groupId, taskId});
