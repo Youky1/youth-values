@@ -19,10 +19,7 @@ export default function User() {
   useEffect(() => {
     createHeatMap(
       'map',
-      durationList.map((item, index) => [
-        currentYearDateList[index],
-        item / 3600,
-      ])
+      durationList.map((item, index) => [currentYearDateList[index], item / 60])
     );
   });
   const {id} = useAutoLogin('user');
@@ -57,9 +54,17 @@ export default function User() {
       </div>
       <div id="map" style={{height: 300, width: 1000, marginTop: 40}}></div>
       <div className={s.btnLine}>
-        <Button onClick={() => setShow(true)}>修改密码</Button>
-        <Button onClick={handleSignOut}>退出登录</Button>
-        <Button onClick={handleDelete}>注销账户</Button>
+        <Button type="text" onClick={() => setShow(true)}>
+          修改密码
+        </Button>
+        |
+        <Button type="text" onClick={handleSignOut}>
+          退出登录
+        </Button>
+        |
+        <Button type="text" onClick={handleDelete}>
+          注销账户
+        </Button>
       </div>
       <Modal
         title="修改密码"
