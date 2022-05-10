@@ -43,6 +43,7 @@ export default function ({callback, initObj, clear, showDetail}: EditorConfig) {
 
   // 提交代办事项的回调函数
   const handleAddItem = async () => {
+    console.log('ddl is: ', ddl);
     const obj: ITodoItem = Object.assign(
       {},
       initObj,
@@ -59,7 +60,7 @@ export default function ({callback, initObj, clear, showDetail}: EditorConfig) {
     try {
       await callback(obj);
       if (clear) {
-        setDdl(new Date());
+        setDdl(null);
         setLevel('');
         setGroup('');
         setDescription('');
