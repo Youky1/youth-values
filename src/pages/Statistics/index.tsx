@@ -1,27 +1,20 @@
 import React, {useState} from 'react';
 import s from './index.module.scss';
-import {Drawer, Switch, Tooltip, Select, DatePicker} from 'antd';
+import {Select, DatePicker, Radio} from 'antd';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   changeShowingRangeAction,
-  toogleShowingTodoAction,
-  toogleShowingTimingAction,
+  toogleShowingTypeAction,
 } from '@/redux/statistics/actions';
 import {RootState} from '~/@types/store';
 import Charts from './components';
-import Title from '@/component/title';
 import {RangePickerValue} from '~/@types/statistics';
 import {getTimeRange} from '~/src/util';
 const {RangePicker} = DatePicker;
 const {Option} = Select;
 
 export default function () {
-  // 是否显示设置
-  const [visiable, setVisiable] = useState(false);
-
-  const {showingRange, showingTodo, showingTiming} = useSelector(
-    (state: RootState) => state.statistics
-  );
+  const {showingRange} = useSelector((state: RootState) => state.statistics);
   const [selectedDate, setSelectedDate] = useState('周/月/年');
 
   const dispatch = useDispatch();
@@ -45,38 +38,25 @@ export default function () {
     }
   };
 
-  // 选择的内容范围
-  const handleTodoShowingChange = () => dispatch(toogleShowingTodoAction());
+  const [value, setValue] = React.useState(1);
 
-  const handleTimingShowingChange = () => dispatch(toogleShowingTimingAction());
+  const onChange = (e: any) => {
+    dispatch(toogleShowingTypeAction());
+    setValue(e.target.value);
+  };
 
   return (
     <div className={s.statistic}>
-      <div
-        className="mainButton"
-        style={{
-          right: 60,
-          bottom: 100,
-        }}
-        onClick={() => setVisiable(true)}
-      >
-        <Tooltip overlay="展开设置">
-          <i className="iconfont icon-shezhi"></i>
-        </Tooltip>
-      </div>
-
-      {/* 配置项 */}
-      <Drawer
-        title="显示配置"
-        visible={visiable}
-        placement="right"
-        onClose={() => setVisiable(false)}
-        width={640}
-        className={s.drawer}
-      >
-        <Title>显示的时间范围</Title>
-        <div className="lineContainer">
-          <p>快捷选择</p>
+      <div>
+        <div className={s.line}>
+          <div className={s.title}>展示的时间范围：</div>
+          <RangePicker
+            value={showingRange}
+            onChange={handleRangeChange}
+          ></RangePicker>
+        </div>
+        <div className={s.line}>
+          <div className={s.title}>快捷选择：</div>
           <Select
             value={selectedDate}
             onChange={handleFastRangeChange}
@@ -87,32 +67,14 @@ export default function () {
             <Option value="本年">本年</Option>
           </Select>
         </div>
-
-        <div className={s.dateBox}>
-          <RangePicker
-            style={{width: '80%'}}
-            value={showingRange}
-            onChange={handleRangeChange}
-          ></RangePicker>
-        </div>
-
-        <Title>显示的内容</Title>
-
-        <div className="lineContainer">
-          <p>任务清单数据</p>
-          <Switch checked={showingTodo} onChange={handleTodoShowingChange} />
-        </div>
-
-        <div className="lineContainer">
-          <p>专注计时数据</p>
-          <Switch
-            checked={showingTiming}
-            onChange={handleTimingShowingChange}
-          />
-        </div>
-      </Drawer>
-
-      {/* 经过筛选的数据统计 */}
+      </div>
+      <div className={s.line}>
+        <div className={s.title}>显示范围：</div>
+        <Radio.Group onChange={onChange} value={value}>
+          <Radio value={1}>任务清单数据</Radio>
+          <Radio value={2}>专注计时数据</Radio>
+        </Radio.Group>
+      </div>
       <Charts />
     </div>
   );

@@ -7,7 +7,7 @@ import moment from 'moment';
 const defaultState: defaultStatisticState = {
   showingRange: [moment().startOf('day'), moment().endOf('day')],
   showingTodo: true,
-  showingTiming: true,
+  showingTiming: false,
 };
 
 export default function (state = defaultState, action: Action) {
@@ -18,13 +18,9 @@ export default function (state = defaultState, action: Action) {
       newState.showingRange = payload;
       break;
     }
-    case Con.CHANGE_SHOWING_TIMING: {
+    case Con.TOOGLE_TYPE: {
       newState.showingTiming = !newState.showingTiming;
-      break;
-    }
-    case Con.CHANGE_SHOWING_TODO: {
       newState.showingTodo = !newState.showingTodo;
-      break;
     }
   }
   return newState;

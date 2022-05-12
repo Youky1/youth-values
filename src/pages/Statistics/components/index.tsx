@@ -8,7 +8,7 @@ export default function () {
     (state: RootState) => state.statistics
   );
   return (
-    <div>
+    <div style={{flex: 1, width: '100%'}}>
       {showingTodo && <DataTodo />}
       {showingTiming && <DataTiming />}
     </div>

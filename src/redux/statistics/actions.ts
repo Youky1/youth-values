@@ -4,9 +4,6 @@ export const changeShowingRangeAction = (payload: RangePickerValue) => ({
   type: Con.CHANGE_RANGE,
   payload,
 });
-export const toogleShowingTodoAction = () => ({
-  type: Con.CHANGE_SHOWING_TODO,
-});
-export const toogleShowingTimingAction = () => ({
-  type: Con.CHANGE_SHOWING_TIMING,
+export const toogleShowingTypeAction = () => ({
+  type: Con.TOOGLE_TYPE,
 });
