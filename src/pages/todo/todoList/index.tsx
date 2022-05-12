@@ -7,10 +7,7 @@ import {Drawer} from 'antd';
 import Editor from '~/src/component/editor';
 import {ITodoItem} from '~/@types/todolist';
 import {updateTodoItem} from '@/api/todolist';
-import {
-  updateTodoItemAction,
-  searchItemAction,
-} from '~/src/redux/todolist/actions';
+import {updateTodoItemAction} from '~/src/redux/todolist/actions';
 import {useDispatch} from 'react-redux';
 import {successTip, failTip} from '@/util';
 import Title from '@/component/title';
@@ -21,11 +18,6 @@ export default function TodoList() {
   const dispatch = useDispatch();
   // 初始化待办事项列表，分为title和list
   const todoList = useInitTodoList({sort: true, hideDone: true});
-
-  // 搜索事项回调
-  const handleInput = useCallback((v: string) => {
-    dispatch(searchItemAction(v));
-  }, []);
 
   // 当前在编辑的事项
   const [currentItem, setCurrentItem] = useState<ITodoItem>();
@@ -51,13 +43,6 @@ export default function TodoList() {
 
   return (
     <div id={s.list}>
-      <Input
-        icon="icon-sousuo"
-        callback={handleInput}
-        tip="搜索成功"
-        allowEmpty
-        placeholder="输入代办名称进行搜索"
-      />
       {(todoList as NamedList[]).map(i =>
         i.list.length ? (
           <React.Fragment key={i.title}>

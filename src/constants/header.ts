@@ -25,10 +25,5 @@ const HEADER_MENUS: Array<HeaderMenu> = [
     icon: 'icon-gerenxinxi',
     path: '/user',
   },
-  {
-    text: '关于',
-    icon: 'icon-guanyu',
-    path: '/about',
-  },
 ];
 export default HEADER_MENUS;

@@ -1,3 +1,9 @@
+.config {
+  width: 35vw;
+  float: left;
+  padding-left: 5vw;
+  margin-top: 20px;
+}
 .groupContainer {
   @include flex();
   width: 400px;
