@@ -186,7 +186,7 @@ export default function Mine({
         title="小组任务"
         visible={showTask}
         onClose={() => setShowTask(false)}
-        width={640}
+        width={1000}
       >
         <div className="lineContainer">
           <p>新建任务</p>

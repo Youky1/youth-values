@@ -1,7 +1,7 @@
 export interface ITodoItem {
   name: string;
   createDate: Date;
-  ddl: Date;
+  ddl: Date | null;
   level: string;
   group: string;
   description: string;

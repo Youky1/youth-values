@@ -22,6 +22,7 @@ export const addTodoItem = async (item: ITodoItem) => {
     const list = ((await getTodoList()) as Array<ITodoItem>) || [];
     const newItem = {...item, id: currentId + 1};
     list.push(newItem);
+    console.log('new list', list);
     await setCurrentId(currentId + 1);
     await setTodoList(list);
     return Promise.resolve(newItem);
