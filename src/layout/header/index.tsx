@@ -17,7 +17,8 @@ export default function Header() {
         {headerMenu.map(item => (
           <div
             className={
-              s.menuItem + (currentPath === item.path ? ' ' + s.isActive : '')
+              s.menuItem +
+              (currentPath.startsWith(item.path) ? ' ' + s.isActive : '')
             }
             onClick={() => nav(item.path)}
             key={item.text}

@@ -5,6 +5,7 @@ import {getEventList} from '@/api/timing';
 import {initEventListAction} from '@/redux/timing/actions';
 import moment from 'moment';
 import {isInRange} from '@/util';
+import {Event} from '~/@types/timing';
 
 // 初始化并获取Event List
 export const useInitEventList = (hideDone: boolean) => {
@@ -62,4 +63,23 @@ export const useTimingRecordByDate = (
     }
   }
   return {timesList, durationList};
+};
+
+export const useCountItem = (
+  abscissa: string[],
+  type: 'MM-DD' | 'YYYY-MMM',
+  timingItem: Event | null
+) => {
+  if (timingItem) {
+    const durationList: number[] = Array(abscissa.length).fill(0);
+    for (const rec of timingItem.record) {
+      const index = abscissa.indexOf(moment(rec.start).format(type));
+      if (index >= 0) {
+        durationList[index] += rec.length / 60;
+      }
+    }
+    return durationList;
+  } else {
+    return [];
+  }
 };

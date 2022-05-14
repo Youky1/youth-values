@@ -11,6 +11,7 @@ import {
   setIsTimingAction,
   toogleEventDoneAction,
 } from '@/redux/timing/actions';
+import {useNavigate} from 'react-router';
 const {confirm} = Modal;
 
 export default function ({item}: {item: Event}) {
@@ -32,6 +33,12 @@ export default function ({item}: {item: Event}) {
       dispatch(editEventAction(item.name, inputValue));
       setIsEdit(false);
     }
+  };
+
+  // 跳转至详情
+  const nav = useNavigate();
+  const handleToData = () => {
+    nav(`/timing/data?name=${item.name}`);
   };
 
   // 删除事件
@@ -66,6 +73,9 @@ export default function ({item}: {item: Event}) {
             className="iconfont icon-bianji"
             onClick={() => setIsEdit(true)}
           ></i>
+        </Tooltip>
+        <Tooltip overlay="数据详情" placement="bottom">
+          <i className="iconfont icon-trend" onClick={handleToData}></i>
         </Tooltip>
         <Tooltip overlay="完成" placement="bottom">
           <i className="iconfont icon-wancheng" onClick={handleFinish}></i>

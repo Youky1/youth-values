@@ -1,6 +1,7 @@
 import moment from 'moment';
 import {ITodoItems, ITodoItem} from '~/@types/todolist';
 import {NamedList} from '~/@types/store';
+import {Event} from '~/@types/timing';
 
 export const getTimeRange = () => {
   const weekStart = moment().isoWeekday(1).startOf('day'); //本周一
@@ -42,7 +43,9 @@ export const sortList = (list: ITodoItems) => {
   ];
   list.map(item => {
     const {ddl} = item;
-    if (isBeforeNow(ddl)) {
+    if (!ddl) {
+      res[3].list.push(item);
+    } else if (isBeforeNow(ddl)) {
       res[0].list.push(item);
     } else if (isThisWeek(ddl)) {
       res[1].list.push(item);
@@ -62,13 +65,13 @@ export const timeFillter = (item: ITodoItem, target: string) => {
       return true;
     }
     case '已过期': {
-      return isBeforeNow(ddl);
+      return isBeforeNow(ddl as any);
     }
     case '本周': {
-      return isThisWeek(ddl);
+      return isThisWeek(ddl as any);
     }
     case '本月': {
-      return isThisMonth(ddl);
+      return isThisMonth(ddl as any);
     }
     default:
       return true;
@@ -112,4 +115,12 @@ export const getDateListOfYear = () => {
     res.push(yearStart.add(1, 'd').format('YYYY-MM-DD'));
   }
   return res;
+};
+
+export const getDateListForTiming = () => {
+  const {monthStart, monthEnd, yearStart, yearEnd} = getTimeRange();
+  return {
+    monthList: getRangeDays(monthStart, monthEnd),
+    yearList: getRangeMonths(yearStart, yearEnd),
+  };
 };
