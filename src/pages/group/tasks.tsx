@@ -1,22 +1,27 @@
-import React from 'react';
-import {Tooltip, Button, Table} from 'antd';
+import React, {useEffect, useState} from 'react';
+import {Tooltip, Button, Table, Tag} from 'antd';
 import {failTip, successTip} from '~/src/util';
 import {finishTask} from '~/src/api/group';
 import {Task} from '~/@types/group';
 import {addTodoItem} from '@/api/todolist';
+import s from './index.module.scss';
+import {getTaskRecord} from '@/api/group';
+
 export default function ({
   groupId,
   task,
   refreshTask,
+  userId,
 }: {
   groupId: string;
   task: Task[];
   refreshTask: Function;
+  userId: string;
 }) {
   // 完成任务
-  const handleComplete = async (id: string) => {
+  const handleComplete = async (taskId: string) => {
     try {
-      await finishTask(groupId, id);
+      await finishTask(groupId, taskId, userId);
       refreshTask();
       successTip('已完成');
     } catch (e) {
@@ -75,5 +80,29 @@ export default function ({
       ),
     },
   ];
-  return <Table dataSource={task} columns={taskColumns} pagination={false} />;
+
+  // 任务数据统计用到的数据
+  const [early, setEarly] = useState({user: '', time: ''});
+  const [late, setLate] = useState({user: '', time: ''});
+  useEffect(() => {
+    getTaskRecord(groupId).then(res => {
+      setEarly(res.early);
+      setLate(res.late);
+    });
+  }, [groupId, userId]);
+
+  return (
+    <>
+      <Table dataSource={task} columns={taskColumns} pagination={false} />
+      {/* 任务数据统计 */}
+      <div className={s.line}>
+        最早工作时间：<Tag color="blue">{early.time}时</Tag>，保持者：
+        <Tag color="blue">{early.user}</Tag>
+      </div>
+      <div className={s.line}>
+        最晚工作时间：<Tag color="volcano">{late.time}时</Tag>，保持者：
+        <Tag color="volcano">{late.user}</Tag>
+      </div>
+    </>
+  );
 }

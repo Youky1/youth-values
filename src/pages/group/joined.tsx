@@ -84,12 +84,13 @@ export default function Joined({
         title="小组任务"
         visible={showTask}
         onClose={() => setShowTask(false)}
-        width={640}
+        width={800}
       >
         <Tasks
           groupId={currentId.current}
           task={task}
           refreshTask={refreshTask}
+          userId={userId}
         />
       </Drawer>
     </>

@@ -11,3 +11,13 @@ export interface Task {
   createDate: string;
   completed: number;
 }
+export interface Record {
+  early: {
+    user: string;
+    time: string;
+  };
+  late: {
+    user: string;
+    time: string;
+  };
+}

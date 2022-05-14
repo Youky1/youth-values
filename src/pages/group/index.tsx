@@ -40,7 +40,7 @@ export default function Group() {
 
   return (
     <div className={s.container}>
-      <Mine refreshData={refreshData} myGroups={myGroups} />
+      <Mine refreshData={refreshData} myGroups={myGroups} userId={id} />
       <Joined refreshData={refreshData} joinedGroup={joinedGroup} userId={id} />
       <Other refreshData={refreshData} otherGroup={groups} userId={id} />
       <AddGroup id={id} refreshData={refreshData} />
