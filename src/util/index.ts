@@ -5,16 +5,16 @@ export * from './charts';
 export * from './data';
 const colors = ['#99CCFF', '#3399CC', '#66CCCC', '#009999'];
 export function getCardColor(e: Event) {
-  const len = e.record.reduce.length;
+  const len = e.record.length;
   let color;
-  if (len <= 5) {
+  if (len <= 0) {
     color = colors[0];
-  } else if (len < 20) {
+  } else if (len < 5) {
     color = colors[1];
-  } else if (len < 50) {
-    color = colors[1];
-  } else {
+  } else if (len < 10) {
     color = colors[2];
+  } else {
+    color = colors[3];
   }
   return {
     backgroundColor: color,
