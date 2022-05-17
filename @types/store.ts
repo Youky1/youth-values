@@ -9,7 +9,10 @@ export interface NamedList {
 }
 export interface DefaultTodoListState {
   todolist: ITodoItems;
-  isShowDone: boolean;
+  showDone: boolean;
+  showDdl: '全部' | '已过期' | '本周' | '本月';
+  showLevel: '全部' | '高' | '中' | '低' | '无';
+  showGroup: string;
 }
 export interface Action {
   type: string;

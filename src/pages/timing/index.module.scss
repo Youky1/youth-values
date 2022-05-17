@@ -95,7 +95,8 @@
   height: 80vh;
   h1 {
     margin: 0 auto;
-    width: 200px;
+    width: 100%;
+    @include flex();
   }
   .line {
     @include flex(space-around);

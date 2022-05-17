@@ -92,59 +92,66 @@ export const deleteGroupAction =
   };
 
 // 显示筛选相关
-export const setShowDoneAction =
-  (show: boolean) => async (dispatch: Dispatch) => {
-    try {
-      const list = await getTodoList();
-      const payloadList = show ? list : list.filter(item => !item.done);
-      dispatch({
-        type: SET_SHOW_DONE,
-        payload: {
-          isShowDone: show,
-          list: payloadList,
-        },
-      });
-    } catch (e) {
-      console.log(e);
-    }
-  };
+export const setShowDoneAction = (show: boolean) => ({
+  type: SET_SHOW_DONE,
+  payload: show,
+});
+// try {
+//   const list = await getTodoList();
+//   const payloadList = show ? list : list.filter(item => !item.done);
+//   dispatch({
+//     type: SET_SHOW_DONE,
+//     payload: {
+//       showDone: show,
+//       list: payloadList,
+//     },
+//   });
+// } catch (e) {
+//   console.log(e);
+// }
 
-export const setShowLevelAction =
-  (level: string) => async (dispatch: Dispatch) => {
-    try {
-      const list = await getTodoList();
-      dispatch({
-        type: SET_SHOW_LEVEL,
-        payload:
-          level === '全部' ? list : list.filter(item => item.level === level),
-      });
-    } catch (e) {
-      console.log(e);
-    }
-  };
+export const setShowLevelAction = (level: string) => ({
+  type: SET_SHOW_LEVEL,
+  payload: level,
+});
+// try {
+//   const list = await getTodoList();
+//   dispatch({
+//     type: SET_SHOW_LEVEL,
+//     payload:
+//       level === '全部' ? list : list.filter(item => item.level === level),
+//   });
+// } catch (e) {
+//   console.log(e);
+// }
 
-export const setShowDdlAction = (ddl: string) => async (dispatch: Dispatch) => {
-  try {
-    const list = await getTodoList();
-    dispatch({
-      type: SET_SHOW_DDL,
-      payload: list.filter(item => timeFillter(item, ddl)),
-    });
-  } catch (e) {
-    console.log(e);
-  }
-};
+export const setShowDdlAction = (ddl: string) => ({
+  type: SET_SHOW_DDL,
+  payload: ddl,
+});
+// try {
+//   const list = await getTodoList();
+//   dispatch({
+//     type: SET_SHOW_DDL,
+//     payload: list.filter(item => timeFillter(item, ddl)),
+//   });
+// } catch (e) {
+//   console.log(e);
+// }
+// };
 
-export const setShowGroupAction =
-  (group: string) => async (dispatch: Dispatch) => {
-    try {
-      const list = await getTodoList();
-      dispatch({
-        type: SET_SHOW_GROUP,
-        payload:
-          group === '全部' ? list : list.filter(item => item.group === group),
-      });
-    } catch (e) {
-      console.log(e);
-    }
-  };
+export const setShowGroupAction = (group: string) => ({
+  type: SET_SHOW_GROUP,
+  payload: group,
+});
+//   try {
+//     const list = await getTodoList();
+//     dispatch({
+//       type: SET_SHOW_GROUP,
+//       payload:
+//         group === '全部' ? list : list.filter(item => item.group === group),
+//     });
+//   } catch (e) {
+//     console.log(e);
+//   }
+// };

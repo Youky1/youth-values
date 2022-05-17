@@ -65,13 +65,13 @@ export const timeFillter = (item: ITodoItem, target: string) => {
       return true;
     }
     case '已过期': {
-      return isBeforeNow(ddl as any);
+      return isBeforeNow(ddl as Date);
     }
     case '本周': {
-      return isThisWeek(ddl as any);
+      return isThisWeek(ddl as Date);
     }
     case '本月': {
-      return isThisMonth(ddl as any);
+      return isThisMonth(ddl as Date);
     }
     default:
       return true;
