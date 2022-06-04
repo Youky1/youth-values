@@ -32,6 +32,7 @@ export default function ({item}: {item: Event}) {
     } else {
       dispatch(editEventAction(item.name, inputValue));
       setIsEdit(false);
+      setInputValue('');
     }
   };
 

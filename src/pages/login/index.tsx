@@ -45,6 +45,7 @@ export default function Login() {
         placeholder="请输入用户名"
       />
       <Input
+        type="password"
         style={{marginTop: 40, width: 300}}
         value={password}
         onChange={e => setPassword(e.target.value)}

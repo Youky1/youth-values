@@ -21,6 +21,7 @@ export default function () {
   const handleAdd = () => {
     dispatch(addEventAction(newEvent));
     setShowAdd(false);
+    setNewEvent('');
   };
 
   const [isShowing, setIsShowing] = useState(false);

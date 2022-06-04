@@ -19,7 +19,7 @@ export const useInitTodoList = ({
   useEffect(() => {
     getTodoList()
       .then(res => {
-        const list = hideDone ? res.filter(item => !item.done) : res;
+        const list = res;
         dispatch(setTodoItemListAction(list as ITodoItems));
       })
       .catch(e => console.log(e));
